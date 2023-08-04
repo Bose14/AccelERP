@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Events</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+</head>
+<body>
+    <header>
+        <img src="../../assests/img/header.png" alt="">
+    </header>
+    <div class="container min-w-full min-h-screen bg-[url('../../assests/img/stu-bg.png')] bg-center bg-cover">
+        <nav class="flex-1 items-center">
+            <div class="bg-h-30 bg-blue-900 flex flex-row-reverse">
+                <div class="max-w-lg ">
+                    <button class="text-white bg-blue-900 hover:text-pink-700  rounded-lg text-sm px-4 py-2  inline-flex  font-bold" type="button" data-dropdown-toggle="dropdown">PROFILE
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 ml-2">
+                            <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
+                          </svg>                
+                    </button>
+                
+                <!-- Dropdown menu -->
+                    <div class="hidden bg-white text-base z-50 list-none divide-y divide-gray-100 rounded shadow my-4" id="dropdown">
+                        <ul class="py-1" aria-labelledby="dropdown">
+                            <li>
+                                <a href="#" class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">My Profile</a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">My Resume</a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">Sign out</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+           
+        </nav>
+
+<!--Container-->
+        <div class="h-screen ">
+            <div class="container ml-12 ">
+                <h1 class="text-xl font-semibold px-8 py-10">Enter The Event Particpated : 
+                    <button class="text-black  bg-slate-100/60 rounded-lg  w-70 px-10 py-2  inline-flex font-medium shadow-md" type="button" data-dropdown-toggle="dropdown1">Click To Select       
+                        <svg class="w-9 h-9 py-3 ml-3 " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+  
+                    </button>
+                </h1>
+               
+            
+            <!-- Dropdown menu -->
+                <div class="hidden bg-contain bg-white text-base z-50 list-none divide-y divide-gray-100 rounded-xl  shadow my-4" id="dropdown1">
+                    <ul class="py-1 w-80 rounded" aria-labelledby="dropdown">
+                        <li>
+                            <a href="#" class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">Faculty Development Program</a>
+                        </li>
+                        <hr>
+                        <li>
+                            <a href="#" class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">Extra -  Course </a>
+                        </li>
+                        <hr>
+                        <li>
+                            <a href="#" class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">Workshop</a>
+                        </li>
+                        <hr>
+                        <li>
+                            <a href="#" class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">Paper Presentation</a>
+                        </li>
+                        <hr>
+                        <li>
+                            <a href="#" class="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">Journal</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <br>
+            <br>
+            <!--Table-->
+<div class="flex relative overflow-x-auto shadow-md sm:rounded-lg  px-10 mt-20 rounded-md" >
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 rounded-md table-auto border-spacing-1">
+        <thead class="text-xs text-gray-700 uppercase bg-slate-100/60 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    S.no
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Event
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Organisation
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Period
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Edit
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Delete
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bg-slate-100/60 border-b dark:bg-gray-900 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    01
+                </th>
+                <td class="px-6 py-4">
+                    Internship
+                </td>
+                <td class="px-6 py-4">
+                    NSIC
+                </td>
+                <td class="px-6 py-4">
+                    JUN-2023 TO JUL-2023
+                </td>
+                <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                </td>
+                <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
+                </td>
+            </tr>
+            <tr class="bg-slate-100/60 border-b dark:bg-gray-900 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    02
+                </th>
+                <td class="px-6 py-4">
+                    Internship
+                </td>
+                <td class="px-6 py-4">
+                    NSIC
+                </td>
+                <td class="px-6 py-4">
+                    JUN-2023 TO JUL-2023
+                </td>
+                <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                </td>
+                <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
+                </td>
+            </tr>
+            <tr class="bg-slate-100/60 border-b dark:bg-gray-900 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white ">
+                    03
+                </th>
+                <td class="px-6 py-4">
+                    Internship
+                </td>
+                <td class="px-6 py-4">
+                    NSIC
+                </td>
+                <td class="px-6 py-4">
+                    JUN-2023 TO JUL-2023
+                </td>
+                <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                </td>
+                <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+    </div>
+        
+    </div>
+
+
+
+
+
+    <script src="https://unpkg.com/@themesberg/flowbite@latest/dist/flowbite.bundle.js"></script>  
+</body>
+</html>
