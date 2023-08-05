@@ -4,63 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Info-IT</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
 </head>
 <body>
     <header>
         <img src="./assests/img/header.png" alt="">
     </header>
-    <div class="container min-w-full min-h-screen bg-[url('./assests/img/background.png')] bg-center bg-cover ">
-        <nav class="flex-1 items-center">
-            <div class="bg-h-30 bg-blue-900">  
-                    <ul class="flex text-center flex-row-reverse">
-                        <li class="list-none inline-block px-5 py-3 "><a href="./html/student/student-login.html" class="text-white px-2 hover:text-pink-700 font-bold">STUDENT</a></li>
-                        <li class="list-none inline-block px-5 py-3 "><a href="./html/faculty/faculty-login.html" class="text-white px-2 hover:text-pink-700 font-bold">FACULTY</a></li>
-                        <li class="list-none inline-block px-5 py-3 "><a href="./html/admin/admin-login.html" class="text-white px-2 hover:text-pink-700 font-bold">ADMIN</a></li>
-                    </ul>
-            </div>
-        </nav>
-    <div class="h-screen flex items-center px-20 md:px-00">
-        <div class="box-content  p-4 bg-slate-100/60 rounded-xl shadow-xl">
-            <h1 class="font-bold">ABOUT</h1><br>
-            <p class="text-justify">The K S R Institute for Engineering and Technology an autonomous college is another landmark of the Aarthi Educational & Charitable Trust which has the perquisite of sprawling education proportionally to the society. It has been founded in the year 2011 by the man of great insight, Thiru.R. Srinivasan. He is the younger son of Lion Dr.K.S.Rangasamy whose altruism enlightens the society. His constant dreams and endeavors erected the dome of knowledge for quenching the long unanswered quest among the blooming minds.</p>
+    <div class="container min-h-screen max-w-screen-2xl bg-[url('./assests/img/background.png')] bg-center bg-cover ">
+        <div>
+            <nav class="bg-blue-900 shadow-lg">
+                <div class="max-w-6xl mx-auto px-4">
+                    <div class="flex justify-between">
+                        <div class="flex space-x-7">
+                                <span class="font-semibold text-white text-lg my-auto">
+                                    KSRIET
+                                </span>
+                        </div>
+                        <div class="hidden md:flex items-center space-x-1">
+                                <a href="./index.html" class="py-4 px-2 text-white  hover:text-pink-700 font-semibold">HOME</a>
+                                <a href="./html/student/student-login.html" class="py-4 px-2 text-white  hover:text-pink-700 font-semibold">STUDENT</a>
+                                <a href="./html/faculty/faculty-login.html" class="py-4 px-2 text-white font-semibold hover:text-pink-700 transition duration-300">FACULTY</a>
+                                <a href="./html/admin/admin-login.html" class="py-4 px-2 text-white font-semibold hover:text-pink-700 transition duration-300">ADMIN</a>
+                            </div>
+            
+                            <div class="md:hidden flex items-center">
+                                <button class="outline-none menu-button">
+                                        <svg class="w-6 h-6 text-white" x-show="! showMenu" fill="none" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-width="3" viewBox="0 00 24 24" stroke="currentColor"><path d="m4 6h16M4 12h16M4 18h16"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden mobile-menu">
+                        <ul class="px-auto">
+                            <li class="active">
+                                <a href="./index.html" class="block text-sm px-2 py-1 hover:text-pink-700 text-white font-semibold">HOME
+                            </li>
+                            <li>
+                                <a href="./html/student/student-login.html" class="block text-sm px-2 py-1 hover:text-pink-700 text-white font-semibold">STUDENT
+                            </li>
+                            <li>
+                                <a href="./html/faculty/faculty-login.html" class="block text-sm px-2 py-1 hover:text-pink-700 text-white font-semibold">FACULTY
+                            </li>
+                            <li>
+                                <a href="./html/admin/admin-login.html" class="block text-sm px-2 py-1 hover:text-pink-700 text-white font-semibold">ADMIN</a>
+                            </li>
+                            <br>
+                        </ul>
+                    </div>
+            </nav>
         </div>
-    </div> 
-</div>
-    <footer class="bg-h-30 bg-blue-900">
-        <h1 class="text-white font-bold px-3 py-2">DEVELOPED BY IT DEPARTMENT   STUDENTS :</h1>
-        <div class="bg-h-30 bg-blue-900 flex flex-row">             
-            <div class="basis-[33.33%]">
-                <ul>
-                    <h2 class="text-pink-700 font-semibold px-3 py-2 ">UI/UX Designers</h2>
-                    <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Mohammed Yasar.I</a></li>
-                    <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Gladson.J.B</a></li>
-                    <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Gowsikk</a></li>
-                </ul>
+        <div class="flex flex-col items-center md:flex-row md:items-stretch px-5 md:px-20 md:mt-20 md:pt-20">
+            <div class="box-content  p-4  bg-slate-100/60 rounded-xl shadow-xl mt-10 md:mt-0 md:w-/2 md:mr-10">
+                <h1 class="font-bold text-center md:text-left">ABOUT</h1>
+                <p class="text-justify mt-2">The K S R Institute for Engineering and Technology an autonomous college is another landmark of the Aarthi Educational & Charitable Trust which has the perquisite of sprawling education proportionally to the society. It has been founded in the year 2011 by the man of great insight, Thiru.R. Srinivasan. He is the younger son of Lion Dr.K.S.Rangasamy whose altruism enlightens the society. His constant dreams and endeavors erected the dome of knowledge for quenching the long unanswered quest among the blooming minds.</p>
             </div>
-            <div class="basis-[33.33%]">
-                <ul>
-                    <h2 class="text-pink-700 font-semibold px-3 py-2 ">Front-End Developers</h2>
-                    
-                    <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Bose A S</a></li>
-                    <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Gladson.J.B</a></li>
-                    <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Gowsikk</a></li>
-                </ul>
-            </div>
-            <div class="basis-[33.33%]">
-                <ul>
-                    <h2 class="text-pink-700 font-semibold px-3 py-2 ">Backend-Developers</h2>
-                    
-                    <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Mohammed Yasar.I</a></li>
-                    <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Gladson.J.B</a></li>
-                    <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Gowsikk</a></li>
-                </ul>
-            </div>
-            
-            
-            </ul>
+        </div>
     </div>
-    </footer>
+                <footer class="bg-blue-900 md:mt-0">
+                    <h1 class="text-white font-bold px-3 py-2">DEVELOPED BY IT DEPARTMENT   STUDENTS :</h1>
+                    <div class="flex flex-col md:flex-row">             
+                        <div class="basis-[33.33%]">
+                            <ul>
+                                <h2 class="text-pink-700 font-semibold px-3 py-2 ">UI/UX Designers</h2>
+                                <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Mohammed Yasar.I</a></li>
+                                <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Gladson.J.B</a></li>
+                                <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Gowsikk</a></li>
+                            </ul>
+                        </div>
+                        <div class="basis-[33.33%]">
+                            <ul>
+                                <h2 class="text-pink-700 font-semibold px-3 py-2 ">Front-End Developers</h2>
+                                <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Bose A S</a></li>
+                                <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Gladson.J.B</a></li>
+                                <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Gowsikk</a></li>
+                            </ul>
+                        </div>
+                        <div class="basis-[33.33%]">
+                            <ul>
+                                <h2 class="text-pink-700 font-semibold px-3 py-2 ">Backend-Developers</h2>
+                                <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Mohammed Yasar.I</a></li>
+                                <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Gladson.J.B</a></li>
+                                <li class="list-none  px-5 py-1"><a href="" class="text-white px-2 ">Gowsikk</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </footer>
+    
+                <script src="./js/script.js"></script>
 
+
+               
 </body>
 </html>
