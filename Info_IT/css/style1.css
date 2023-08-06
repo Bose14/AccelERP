@@ -1,0 +1,19 @@
+body
+{
+background-image: url(../assests/img/bg-info-1.jpg);
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: 100% 100%;
+
+}
+
+nav{
+    background-color: rgb(30, 58, 138);
+}
+nav button{
+    background-color: rgb(30, 58, 138);
+
+}
+.btn{
+    background-color: rgb(30, 58, 138);
+}
