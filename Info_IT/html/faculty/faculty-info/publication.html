@@ -14,17 +14,11 @@
 </header>
 <div>
   <nav class="navbar navbar-light">
-    <div class="container-fluid flex flex-row-reverse px-5">
-   <div class="dropdown">
-  <button class="btn  dropdown-toggle text-white fw-semibold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-    PROFILE
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item" href="#">My Profile</a></li>
-    <li><a class="dropdown-item" href="#">My Resume</a></li>
-    <li><a class="dropdown-item" href="../../../index.html">Sign out</a></li>
-  </ul>
-</div>
+    <div class="container-fluid flex flex-row-reverse px-2">
+      <div >
+        <a href="#" class="text-white text-decoration-none fw-semibold px-3">PROFILE</a>
+        <a href="../../../index.html" class="text-white text-decoration-none fw-semibold px-3">LOGOUT</a>
+      </div>
 </div>
 </nav>
 </div>
@@ -38,32 +32,32 @@
 <form class="mx-auto col-10 col-md-8 col-lg-6 text-white ">
   <div class="form-group">
     <label for="Events">Event</label>
-    <input type="Event" class="form-control" id="exampleEvent" aria-describedby="EvenetHelp" placeholder="Enter the event">
-    <small id="Help" class="form-text text-muted">Enter the event you performed.</small>
+    <input type="Event" class="form-control" id="exampleEvent" aria-describedby="EvenetHelp" placeholder="Enter the event" required>
+    <small id="Help" class="form-text text-white">Enter the event you performed.</small>
   </div>
   <br>
   <div class="form-group">
     <label for="Platform">Organization</label>
-    <input type="Platform" class="form-control" id="exampleOrg" placeholder="Enter the Platform">
-    <small id="Help" class="form-text text-muted">Enter the Publication Office Name.</small>
+    <input type="Platform" class="form-control" id="exampleOrg" placeholder="Enter the Platform" required>
+    <small id="Help" class="form-text text-white">Enter the Publication Office Name.</small>
   </div>
   <br>
   <div class="form-group">
     <label for="CN">Publication Name</label>
-    <input type="CN" class="form-control" id="exampleCN" placeholder="Enter the name of the course">
-    <small id="Help" class="form-text text-muted">Name of the Publication which you have Written.</small>
+    <input type="CN" class="form-control" id="exampleCN" placeholder="Enter the name of the course" required>
+    <small id="Help" class="form-text text-white">Name of the Publication which you have Written.</small>
   </div>
   <br>
   <div class="form-group">
     <label for="Duration">Duration</label>
-    <input type="Duration" class="form-control" id="exampleDuration" placeholder="Enter the Duration of learning">
-    <small id="Help" class="form-text text-muted">It may be days, weeks or months also.</small>
+    <input type="Duration" class="form-control" id="exampleDuration" placeholder="Enter the Duration of learning" required>
+    <small id="Help" class="form-text text-white">It may be days, weeks or months also.</small>
   </div>
   <br>
   <br>
   <div class="form-group">
     <label for="exampleFormControlFile1">Upload the certificate if any</label>
-    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+    <input type="file" class="form-control-file" id="exampleFormControlFile1" required>
   </div>
   <br> 
  <a class="btn btn-primary submit text-white " href="faculty.html" role="button">Submit</a>
