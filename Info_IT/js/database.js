@@ -147,7 +147,7 @@ function submitintern(){
         // Firebase Storage configuration
         const storage = firebase.storage();
         const storageRef = storage.ref();
-        const filename = "images/" + file.name;
+        const filename = "stuintern/" + file.name;
         const progressBar = document.getElementById("progress-bar")
 
         // Upload the file to Firebase Storage
@@ -231,7 +231,7 @@ function submitworkshop(){
         // Firebase Storage configuration
         const storage = firebase.storage();
         const storageRef = storage.ref();
-        const filename = "images/" + file.name;
+        const filename = "stuworkshop/" + file.name;
         const progressBar = document.getElementById("progress-bar")
 
         // Upload the file to Firebase Storage
@@ -313,7 +313,7 @@ function submitextracourses(){
         // Firebase Storage configuration
         const storage = firebase.storage();
         const storageRef = storage.ref();
-        const filename = "images/" + file.name;
+        const filename = "stucourses/" + file.name;
         const progressBar = document.getElementById("progress-bar")
 
         // Upload the file to Firebase Storage
@@ -394,7 +394,7 @@ function submitppt(){
         // Firebase Storage configuration
         const storage = firebase.storage();
         const storageRef = storage.ref();
-        const filename = "images/" + file.name;
+        const filename = "stuppt/" + file.name;
         const progressBar = document.getElementById("progress-bar")
 
         // Upload the file to Firebase Storage
@@ -474,7 +474,7 @@ function submitproject(){
         // Firebase Storage configuration
         const storage = firebase.storage();
         const storageRef = storage.ref();
-        const filename = "images/" + file.name;
+        const filename = "stuproject/" + file.name;
         const progressBar = document.getElementById("progress-bar")
 
         // Upload the file to Firebase Storage
@@ -555,7 +555,7 @@ function submitother(){
         // Firebase Storage configuration
         const storage = firebase.storage();
         const storageRef = storage.ref();
-        const filename = "images/" + file.name;
+        const filename = "stuothers/" + file.name;
         const progressBar = document.getElementById("progress-bar")
 
         // Upload the file to Firebase Storage
@@ -591,6 +591,489 @@ function submitother(){
                 })
                 alert("File uploaded successfully and URL saved to database!");
                 window.location.href="/Info_IT/html/student/student-info/student.html"
+            }
+        );
+        }
+
+}
+    })
+}
+
+//FACULTY COLUMN
+
+//FDP
+
+function submitfdp(){
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+      
+            // User is signed in
+            console.log("User Signed In");
+            var uid = user.uid;
+
+    var event = document.getElementById("exampleEvent").value;
+    var org = document.getElementById("exampleOrg").value;
+    var duration = document.getElementById("exampleDuration").value;
+    var domain = document.getElementById("exampleDomain").value;
+    var date1 = document.getElementById("exampleDate").value;
+    // console.log(date)
+    let startdate=  date1.replace(/-/g, "");
+    var enddate = document.getElementById("exampleDate2").value;
+   
+    var mode = document.getElementById("exampleMode").value;
+    var certificate = document.getElementById("exampleFormControlFile1")
+
+
+    if(event=="" || org=="" || date1=="" || domain=="" || duration=="" || enddate=="" || mode=="")
+    {
+        document.getElementById("error").innerHTML="Fill all the details"
+        document.getElementById("error").style.color="red"
+
+    }
+    else{
+        const file = certificate.files[0];
+
+        // Validate file type and size...
+        // (same validation code as before)
+
+        // Firebase Storage configuration
+        const storage = firebase.storage();
+        const storageRef = storage.ref();
+        const filename = "fdp/" + file.name;
+        const progressBar = document.getElementById("progress-bar")
+
+        // Upload the file to Firebase Storage
+        const uploadTask = storageRef.child(filename).put(file);
+
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                // You can track the upload progress here if needed
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                progressBar.style.width = `${progress}%`;
+            },
+            (error) => {
+                console.error("Error uploading file:", error);
+                alert("Error uploading file.");
+            },
+            async () => {
+                // File uploaded successfully
+
+                // Get the download URL of the uploaded image
+                const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+
+                // Save the download URL to Firebase Realtime Database
+                const newUserRef = database.ref("facultycertify/"+uid+"/"+event+"/"+startdate+"/")
+                newUserRef.set({
+                  event: event,
+                  organization: org,
+                  duration:duration,
+                  date: date1,
+                  enddate:enddate,
+                  domain: domain,
+                  mode:mode,
+                  certificate:downloadURL,
+                
+                })
+                alert("File uploaded successfully and URL saved to database!");
+                window.location.href="/Info_IT/html/faculty/faculty-info/faculty.html"
+            }
+        );
+        }
+
+}
+    })
+}
+
+//Technical Publication
+function submitpublication(){
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+      
+            // User is signed in
+            console.log("User Signed In");
+            var uid = user.uid;
+
+    var event = document.getElementById("exampleEvent").value;
+    var org = document.getElementById("exampleOrg").value;
+    var name= document.getElementById("examplePublicationName").value;
+    var date1 = document.getElementById("exampleDate").value;
+    // console.log(date)
+    let certificatedate=  date1.replace(/-/g, "");
+    var publication = document.getElementById("exampleFormControlFile1")
+
+
+    if(event=="" || org=="" || date1=="" || name=="")
+    {
+        document.getElementById("error").innerHTML="Fill all the details"
+        document.getElementById("error").style.color="red"
+
+    }
+    else{
+        const file = publication.files[0];
+
+        // Validate file type and size...
+        // (same validation code as before)
+
+        // Firebase Storage configuration
+        const storage = firebase.storage();
+        const storageRef = storage.ref();
+        const filename = "facpublication/" + file.name;
+        const progressBar = document.getElementById("progress-bar")
+
+        // Upload the file to Firebase Storage
+        const uploadTask = storageRef.child(filename).put(file);
+
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                // You can track the upload progress here if needed
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                progressBar.style.width = `${progress}%`;
+            },
+            (error) => {
+                console.error("Error uploading file:", error);
+                alert("Error uploading file.");
+            },
+            async () => {
+                // File uploaded successfully
+
+                // Get the download URL of the uploaded image
+                const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+
+                // Save the download URL to Firebase Realtime Database
+                const newUserRef = database.ref("facultycertify/"+uid+"/"+event+"/"+certificatedate+"/")
+                newUserRef.set({
+                  event: event,
+                  organization: org,
+                  name:name,
+                  date:date1,
+                  publication:downloadURL,
+                
+                })
+                alert("File uploaded successfully and URL saved to database!");
+                window.location.href="/Info_IT/html/faculty/faculty-info/faculty.html"
+            }
+        );
+        }
+
+}
+    })
+}
+
+//workshop
+function submitfacworkshop(){
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+      
+            // User is signed in
+            console.log("User Signed In");
+            var uid = user.uid;
+
+    var event = document.getElementById("exampleEvent").value;
+    var org = document.getElementById("exampleOrg").value;
+    var topic = document.getElementById("exampleTopic").value;
+    var duration = document.getElementById("exampleDuration").value;
+    var date1 = document.getElementById("exampleDate").value;
+    // console.log(date)
+    let startdate=  date1.replace(/-/g, "");
+    var enddate = document.getElementById("exampleDate2").value;
+   
+    var mode = document.getElementById("exampleMode").value;
+    var certificate = document.getElementById("exampleFormControlFile1")
+
+
+    if(event=="" || org=="" || date1=="" || topic=="" || duration=="" || enddate=="" || mode=="")
+    {
+        document.getElementById("error").innerHTML="Fill all the details"
+        document.getElementById("error").style.color="red"
+
+    }
+    else{
+        const file = certificate.files[0];
+
+        // Validate file type and size...
+        // (same validation code as before)
+
+        // Firebase Storage configuration
+        const storage = firebase.storage();
+        const storageRef = storage.ref();
+        const filename = "facworkshop/" + file.name;
+        const progressBar = document.getElementById("progress-bar")
+
+        // Upload the file to Firebase Storage
+        const uploadTask = storageRef.child(filename).put(file);
+
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                // You can track the upload progress here if needed
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                progressBar.style.width = `${progress}%`;
+            },
+            (error) => {
+                console.error("Error uploading file:", error);
+                alert("Error uploading file.");
+            },
+            async () => {
+                // File uploaded successfully
+
+                // Get the download URL of the uploaded image
+                const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+
+                // Save the download URL to Firebase Realtime Database
+                const newUserRef = database.ref("facultycertify/"+uid+"/"+event+"/"+startdate+"/")
+                newUserRef.set({
+                  event: event,
+                  organization: org,
+                  duration:duration,
+                  startdate: startdate,
+                  enddate:enddate,
+                  topic: topic,
+                  mode:mode,
+                  certificate:downloadURL,
+                
+                })
+                alert("File uploaded successfully and URL saved to database!");
+                window.location.href="/Info_IT/html/faculty/faculty-info/faculty.html"
+            }
+        );
+        }
+
+}
+    })
+}
+
+//journal
+
+function submitjournal(){
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+      
+            // User is signed in
+            console.log("User Signed In");
+            var uid = user.uid;
+
+    var event = document.getElementById("exampleEvent").value;
+    var org = document.getElementById("exampleOrg").value;
+    var topic = document.getElementById("exampleTopic").value;
+    var date1 = document.getElementById("exampleDate").value;
+    // console.log(date)
+    let certificatedate=  date1.replace(/-/g, "");
+   
+    var certificate = document.getElementById("exampleFormControlFile1")
+
+
+    if(event=="" || org=="" || date1=="" || topic=="")
+    {
+        document.getElementById("error").innerHTML="Fill all the details"
+        document.getElementById("error").style.color="red"
+
+    }
+    else{
+        const file = certificate.files[0];
+
+        // Validate file type and size...
+        // (same validation code as before)
+
+        // Firebase Storage configuration
+        const storage = firebase.storage();
+        const storageRef = storage.ref();
+        const filename = "facjournal/" + file.name;
+        const progressBar = document.getElementById("progress-bar")
+
+        // Upload the file to Firebase Storage
+        const uploadTask = storageRef.child(filename).put(file);
+
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                // You can track the upload progress here if needed
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                progressBar.style.width = `${progress}%`;
+            },
+            (error) => {
+                console.error("Error uploading file:", error);
+                alert("Error uploading file.");
+            },
+            async () => {
+                // File uploaded successfully
+
+                // Get the download URL of the uploaded image
+                const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+
+                // Save the download URL to Firebase Realtime Database
+                const newUserRef = database.ref("facultycertify/"+uid+"/"+event+"/"+certificatedate+"/")
+                newUserRef.set({
+                  event: event,
+                  organization: org,
+                  topic:topic,
+                  date:date1,
+                  certificate:downloadURL,
+                
+                })
+                alert("File uploaded successfully and URL saved to database!");
+                window.location.href="/Info_IT/html/faculty/faculty-info/faculty.html"
+            }
+        );
+        }
+
+}
+    })
+}
+
+//project
+
+function submitfacproject(){
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+      
+            // User is signed in
+            console.log("User Signed In");
+            var uid = user.uid;
+
+    var event = document.getElementById("exampleEvent").value;
+    var title = document.getElementById("exampleTitle").value;
+    var duration = document.getElementById("exampleDuration").value;
+    var status = document.getElementById("exampleMode").value;
+    var link = document.getElementById("basicurl").value;
+    var date1 = document.getElementById("exampleDate").value;
+    // console.log(date)
+    let certificatedate=  date1.replace(/-/g, "");
+    var certificate = document.getElementById("exampleFormControlFile1")
+
+
+    if(event=="" || title=="" || date1=="" || duration=="" || status=="")
+    {
+        document.getElementById("error").innerHTML="Fill all the details"
+        document.getElementById("error").style.color="red"
+
+    }
+    else{
+        const file = certificate.files[0];
+
+        // Validate file type and size...
+        // (same validation code as before)
+
+        // Firebase Storage configuration
+        const storage = firebase.storage();
+        const storageRef = storage.ref();
+        const filename = "facproject/" + file.name;
+        const progressBar = document.getElementById("progress-bar")
+
+        // Upload the file to Firebase Storage
+        const uploadTask = storageRef.child(filename).put(file);
+
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                // You can track the upload progress here if needed
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                progressBar.style.width = `${progress}%`;
+            },
+            (error) => {
+                console.error("Error uploading file:", error);
+                alert("Error uploading file.");
+            },
+            async () => {
+                // File uploaded successfully
+
+                // Get the download URL of the uploaded image
+                const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+
+                // Save the download URL to Firebase Realtime Database
+                const newUserRef = database.ref("facultycertify/"+uid+"/"+event+"/"+certificatedate+"/")
+                newUserRef.set({
+                    event: event,
+                    title: title,
+                    duration:duration,
+                    status:status,
+                    link:link,
+                    date:date1,
+                    certificate:downloadURL,
+                
+                })
+                alert("File uploaded successfully and URL saved to database!");
+                window.location.href="/Info_IT/html/faculty/faculty-info/faculty.html "
+            }
+        );
+        }
+
+}
+    })
+}
+
+//Other
+function submitfacother(){
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+      
+            // User is signed in
+            console.log("User Signed In");
+            var uid = user.uid;
+
+    var event = document.getElementById("exampleEvent").value;
+    var org = document.getElementById("exampleOrg").value;
+    var duration = document.getElementById("exampleDuration").value;
+    var date1 = document.getElementById("exampleDate").value;
+    // console.log(date)
+    let startdate=  date1.replace(/-/g, "");
+    var domain = document.getElementById("exampleDomain").value;
+    var mode = document.getElementById("exampleMode").value;
+    var certificate = document.getElementById("exampleFormControlFile1")
+
+
+    if(event=="" || org=="" || date1=="" || domain=="" || duration=="" || mode=="")
+    {
+        document.getElementById("error").innerHTML="Fill all the details"
+        document.getElementById("error").style.color="red"
+
+    }
+    else{
+        const file = certificate.files[0];
+
+        // Validate file type and size...
+        // (same validation code as before)
+
+        // Firebase Storage configuration
+        const storage = firebase.storage();
+        const storageRef = storage.ref();
+        const filename = "facothers/" + file.name;
+        const progressBar = document.getElementById("progress-bar")
+
+        // Upload the file to Firebase Storage
+        const uploadTask = storageRef.child(filename).put(file);
+
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                // You can track the upload progress here if needed
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                progressBar.style.width = `${progress}%`;
+            },
+            (error) => {
+                console.error("Error uploading file:", error);
+                alert("Error uploading file.");
+            },
+            async () => {
+                // File uploaded successfully
+
+                // Get the download URL of the uploaded image
+                const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+
+                // Save the download URL to Firebase Realtime Database
+                const newUserRef = database.ref("facultycertify/"+uid+"/"+event+"/"+startdate+"/")
+                newUserRef.set({
+                  event: event,
+                  organization: org,
+                  duration:duration,
+                  date: date1,
+                  domain: domain,
+                  mode:mode,
+                  certificate:downloadURL
+                })
+                alert("File uploaded successfully and URL saved to database!");
+                window.location.href="/Info_IT/html/faculty/faculty-info/faculty.html"
             }
         );
         }
