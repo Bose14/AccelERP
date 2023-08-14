@@ -12,3 +12,7 @@ nav{
 nav button{
     background-color: rgb(30, 58, 138);
 }
+th, thead{
+    position: sticky;
+    top: 0;
+  }

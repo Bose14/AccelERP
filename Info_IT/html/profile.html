@@ -51,10 +51,6 @@
 							<i class="fa-solid fa-file"></i>
 							Resume
 						</a>
-						<a class="nav-link" id="password-tab" data-toggle="pill" href="#password" role="tab" aria-controls="password" aria-selected="false">
-							<i class="fa fa-key text-center mr-1"></i> 
-							Password
-						</a>
 					</div>
 				</div>
 				<div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
@@ -116,35 +112,6 @@
 						</div>
 					</div>
 					
-					<div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-						<h3 class="mb-4">Password Settings</h3>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-								  	<label>Old password</label>
-								  	<input type="password" class="form-control">
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-								  	<label>New password</label>
-								  	<input type="password" class="form-control">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-								  	<label>Confirm new password</label>
-								  	<input type="password" class="form-control">
-								</div>
-							</div>
-						</div>
-						<div>
-							<button class="btn text-white">Update</button>
-							<button class="btn text-white">Cancel</button>
-						</div>
-					</div>
 					<div class="tab-pane fade" id="resume" role="tabpanel" aria-labelledby="security-tab">
 						<form id="dropFileForm" action="http://localhost/upload.php" method="post" onsubmit="uploadFiles(event)">
                             <input type="file" name="files[]" id="fileInput" multiple onchange="addFiles(event)">

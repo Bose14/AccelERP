@@ -97,7 +97,7 @@ function adlogin(){
                 window.location.href="/Info_IT/html/admin/admin-info/admin-info.html"
             }
             else{
-                alert("You are not a faculty");
+                alert("You are not an Admin");
             }
         })
     
@@ -107,7 +107,16 @@ function adlogin(){
 
 })
 }
-
+//Forget Password
+function forget(){
+    var email=document.getElementById("email").value;
+    auth.sendPasswordResetEmail(email).then(()=>{
+        alert("Password Reset Mail is Sent Successfully..! Check Your Email Including Spam Folder Also ")
+    }).catch(function(error) {
+        alert("error")
+        console.error("Error sending password reset email:", error);
+      });
+}
 
 //INTERN SUBMIT
 
@@ -1081,3 +1090,60 @@ function submitfacother(){
 }
     })
 }
+
+//table Retrieving
+
+// Assuming you have Firebase initialized and authenticated
+
+auth.onAuthStateChanged(user=>{
+if(user){
+var uid = user.uid;
+// Reference to the "student" root
+const studentRef = database.ref("student");
+
+// Retrieve data
+studentRef.once("value").then(snapshot => {
+  const data = snapshot.val();
+
+  // Create an object to store data for each event
+  const eventData = {};
+
+  // Loop through data and organize it by event name
+  for (const uid in data) {
+    const event = data[uid].name;
+    if (!eventData[event]) {
+      eventData[event] = [];
+    }
+    eventData[event].push(data[uid]);
+  }
+
+  // Create HTML tables dynamically
+  const tableContainer = document.getElementById("table-container");
+
+  for (const event in eventData) {
+    const table = document.createElement("table");
+    const headerRow = table.insertRow();
+    const firstData = eventData[event][0];
+    
+    // Create header cells based on the keys of the first data object
+    for (const key in firstData) {
+      const headerCell = document.createElement("th");
+      headerCell.textContent = key;
+      headerRow.appendChild(headerCell);
+    }
+
+    // Create rows and cells with data
+    eventData[event].forEach(eventEntry => {
+      const row = table.insertRow();
+      for (const key in eventEntry) {
+        const cell = row.insertCell();
+        cell.textContent = eventEntry[key];
+      }
+    });
+
+    // Append the table to the container
+    tableContainer.appendChild(table);
+  }
+});
+}
+})
