@@ -1092,58 +1092,106 @@ function submitfacother(){
 }
 
 //table Retrieving
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+  
+ // Reference to the database
+ var uid = user.uid; // Replace with actual user UID
 
-// Assuming you have Firebase initialized and authenticated
+ // Reference to the data path
+ var eventsRef = database.ref("student/" + uid);
 
-auth.onAuthStateChanged(user=>{
-if(user){
-var uid = user.uid;
-// Reference to the "student" root
-const studentRef = database.ref("student");
+ // Retrieve data from Firebase
+ eventsRef.once("value")
+   .then(function(snapshot) {
+     snapshot.forEach(function(eventSnapshot) {
+       var eventData = eventSnapshot.val();
+       var eventName = eventData.eventname;
+       var organization = eventData.organization;
+       var date = eventData.date;
 
-// Retrieve data
-studentRef.once("value").then(snapshot => {
-  const data = snapshot.val();
+       // Add a new row to the table
+       var table = document.getElementById("eventTable");
+       var newRow = table.insertRow(-1);
+       var nameCell = newRow.insertCell(0);
+       var orgCell = newRow.insertCell(1);
+       var dateCell = newRow.insertCell(2);
 
-  // Create an object to store data for each event
-  const eventData = {};
-
-  // Loop through data and organize it by event name
-  for (const uid in data) {
-    const event = data[uid].name;
-    if (!eventData[event]) {
-      eventData[event] = [];
-    }
-    eventData[event].push(data[uid]);
-  }
-
-  // Create HTML tables dynamically
-  const tableContainer = document.getElementById("table-container");
-
-  for (const event in eventData) {
-    const table = document.createElement("table");
-    const headerRow = table.insertRow();
-    const firstData = eventData[event][0];
-    
-    // Create header cells based on the keys of the first data object
-    for (const key in firstData) {
-      const headerCell = document.createElement("th");
-      headerCell.textContent = key;
-      headerRow.appendChild(headerCell);
-    }
-
-    // Create rows and cells with data
-    eventData[event].forEach(eventEntry => {
-      const row = table.insertRow();
-      for (const key in eventEntry) {
-        const cell = row.insertCell();
-        cell.textContent = eventEntry[key];
-      }
-    });
-
-    // Append the table to the container
-    tableContainer.appendChild(table);
-  }
-});
+       // Populate cells with event details
+       nameCell.innerHTML = eventName;
+       orgCell.innerHTML = organization;
+       dateCell.innerHTML = date;
+     });
+   })
+.catch(function(error) {
+     console.error("Error retrieving data:", error);
+   });
 }
 })
+
+
+//Profile Information
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        var uid = user.uid;
+        firebase.database().ref('user/'+uid).once('value').then(function(snapshot){
+        let name=snapshot.val().name;
+        console.log(name)
+        let role=snapshot.val().role;
+        let reg=snapshot.val().regno;
+        let dob=snapshot.val().dob;
+        let gender=snapshot.val().gender;
+        let address=snapshot.val().address;
+        let state=snapshot.val().state;
+        let religion=snapshot.val().Religion;
+        let caste=snapshot.val().caste;
+        let nationality=snapshot.val().nationality;
+        let bloodgroup=snapshot.val().bloodgroup;
+        let adhar=snapshot.val().adhar;
+        let phone=snapshot.val().phone;
+        let college=snapshot.val().college;
+        let degree=snapshot.val().degree;
+        let branch=snapshot.val().branch;
+        let father=snapshot.val().father;
+        let mother=snapshot.val().mother;
+        let email=user.email;
+        name = document.getElementById("fullname").value=name;
+        email = document.getElementById("email").value=email;
+        reg=document.getElementById("regno").value=reg;
+        dob=document.getElementById("dob").value=dob;
+        gender=document.getElementById("gender").value=gender;
+        address=document.getElementById("address").value=address;
+        state=document.getElementById("state").value=state;
+        religion=document.getElementById("religion").value=religion;
+        caste=document.getElementById("caste").value=caste;
+        nationality=document.getElementById("nationality").value=nationality;
+        bloodgroup=document.getElementById("bloodgroup").value=bloodgroup;
+        adhar=document.getElementById("adhar").value=adhar;
+        phone=document.getElementById("phone").value=phone;
+        college=document.getElementById("college").value=college;
+        degree=document.getElementById("degree").value=degree+'/'+branch;
+        father=document.getElementById("father").value=father;
+        mother=document.getElementById("mother").value=mother;
+        let designation = document.getElementById("desig");
+        if (role === "student")
+        {
+            designation.value = "Student";
+        }
+        else{
+            designation.value = "Faculty";
+        }
+})
+    }})
+
+
+//Profile student
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        var uid = user.uid;
+        firebase.database().ref('user/'+uid).once('value').then(function(snapshot){
+        let name=snapshot.val().name;
+        console.log(name)
+        name = document.getElementById("profile-name").textContent=name;
+
+})
+}})
