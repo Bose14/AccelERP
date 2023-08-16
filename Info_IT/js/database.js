@@ -1143,11 +1143,11 @@ firebase.auth().onAuthStateChanged((user) => {
         let gender=snapshot.val().gender;
         let address=snapshot.val().address;
         let state=snapshot.val().state;
-        let religion=snapshot.val().Religion;
+        let religion=snapshot.val().religion;
         let caste=snapshot.val().caste;
         let nationality=snapshot.val().nationality;
         let bloodgroup=snapshot.val().bloodgroup;
-        let adhar=snapshot.val().adhar;
+        let aadhar=snapshot.val().aadhar;
         let phone=snapshot.val().phone;
         let college=snapshot.val().college;
         let degree=snapshot.val().degree;
@@ -1166,7 +1166,7 @@ firebase.auth().onAuthStateChanged((user) => {
         caste=document.getElementById("caste").value=caste;
         nationality=document.getElementById("nationality").value=nationality;
         bloodgroup=document.getElementById("bloodgroup").value=bloodgroup;
-        adhar=document.getElementById("adhar").value=adhar;
+        aadhar=document.getElementById("adhar").value=aadhar;
         phone=document.getElementById("phone").value=phone;
         college=document.getElementById("college").value=college;
         degree=document.getElementById("degree").value=degree+'/'+branch;
