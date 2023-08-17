@@ -13,7 +13,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"> </script> 
   <script src="../../../js/database.js"> </script> 
 </head>
-<body>
+<body onload="filltable()">
     <header>
         <img src="../../../assests/img/header.png" height="10%" width="100%">
     </header>
@@ -75,6 +75,35 @@
       </tbody>
       </table>
     </div>
+    
+
+    </div>
   </div>
+
+  <style>
+    #eventTable {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    
+    #eventTable th,
+    #eventTable td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+    
+    #eventTable th {
+      background-color: #f2f2f2;
+    }
+    
+    /* Responsive design for smaller screens */
+    @media screen and (max-width: 600px) {
+      #eventTable {
+        font-size: 12px;
+      }
+    }
+  </style>
 </body>
 </html>

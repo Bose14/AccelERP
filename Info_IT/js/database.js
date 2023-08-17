@@ -17,6 +17,62 @@ const firebaseConfig = {
   var database_ref = database.ref(); 
   const storage = firebase.storage();
 
+
+  function fillprofile(){
+    //Profile Information
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            var uid = user.uid;
+            firebase.database().ref('user/'+uid).once('value').then(function(snapshot){
+            let name=snapshot.val().name;
+            console.log(name)
+            let role=snapshot.val().role;
+            let reg=snapshot.val().regno;
+            let dob=snapshot.val().dob;
+            let gender=snapshot.val().gender;
+            let address=snapshot.val().address;
+            let state=snapshot.val().state;
+            let religion=snapshot.val().religion;
+            let caste=snapshot.val().caste;
+            let nationality=snapshot.val().nationality;
+            let bloodgroup=snapshot.val().bloodgroup;
+            let aadhar=snapshot.val().aadhar;
+            let phone=snapshot.val().phone;
+            let college=snapshot.val().college;
+            let degree=snapshot.val().degree;
+            let branch=snapshot.val().branch;
+            let father=snapshot.val().father;
+            let mother=snapshot.val().mother;
+            let email=user.email;
+            name = document.getElementById("fullname").value=name;
+            email = document.getElementById("email").value=email;
+            reg=document.getElementById("regno").value=reg;
+            dob=document.getElementById("dob").value=dob;
+            gender=document.getElementById("gender").value=gender;
+            address=document.getElementById("address").value=address;
+            state=document.getElementById("state").value=state;
+            religion=document.getElementById("religion").value=religion;
+            caste=document.getElementById("caste").value=caste;
+            nationality=document.getElementById("nationality").value=nationality;
+            bloodgroup=document.getElementById("bloodgroup").value=bloodgroup;
+            aadhar=document.getElementById("adhar").value=aadhar;
+            phone=document.getElementById("phone").value=phone;
+            college=document.getElementById("college").value=college;
+            degree=document.getElementById("degree").value=degree+'/'+branch;
+            father=document.getElementById("father").value=father;
+            mother=document.getElementById("mother").value=mother;
+            let designation = document.getElementById("desig");
+            if (role === "student")
+            {
+                designation.value = "Student";
+            }
+            else{
+                designation.value = "Faculty";
+            }
+    })
+        }})
+    }
+
 //STUDENT LOGIN
   function stulogin(){
     var username = document.getElementById("username").value
@@ -118,6 +174,29 @@ function forget(){
       });
 }
 
+//random id
+
+const usedIds = new Set();
+
+function generateUniqueRandomId(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomId = '';
+
+  do {
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomId += characters.charAt(randomIndex);
+    }
+  } while (usedIds.has(randomId));
+
+  usedIds.add(randomId);
+  return randomId;
+}
+
+
+  
+
+
 //INTERN SUBMIT
 
 function submitintern(){
@@ -127,7 +206,6 @@ function submitintern(){
             // User is signed in
             console.log("User Signed In");
             var uid = user.uid;
-
     var event = document.getElementById("exampleEvent").value;
     var org = document.getElementById("exampleOrg").value;
     var duration = document.getElementById("exampleDuration").value;
@@ -139,6 +217,7 @@ function submitintern(){
     var mode = document.getElementById("exampleMode").value;
     var certificate = document.getElementById("exampleFormControlFile1")
     var report = document.getElementById("exampleFormControlFile2").value;
+    const randomId = generateUniqueRandomId(10);
 
 
     if(event=="" || org=="" || date1=="" || domain=="" || duration=="" || enddate=="" || mode=="")
@@ -158,7 +237,9 @@ function submitintern(){
         const storageRef = storage.ref();
         const filename = "stuintern/" + file.name;
         const progressBar = document.getElementById("progress-bar")
+        // random id
 
+        
         // Upload the file to Firebase Storage
         const uploadTask = storageRef.child(filename).put(file);
 
@@ -185,12 +266,13 @@ function submitintern(){
                   event: event,
                   organization: org,
                   duration:duration,
-                  startdate: startdate,
+                  date: date1,
                   enddate:enddate,
                   domain: domain,
                   mode:mode,
                   certificate:downloadURL,
-                  report:report
+                  report:report,
+                  id:randomId
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
@@ -205,6 +287,7 @@ function submitintern(){
 //WORKSHOP    
 
 function submitworkshop(){
+
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
       
@@ -1089,102 +1172,100 @@ function submitfacother(){
 
 }
     })
+
 }
 
-//table Retrieving
-firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-  
- // Reference to the database
- var uid = user.uid; // Replace with actual user UID
+function filltable() {
+    const tableBody = document.getElementById("tableBody");
 
- // Reference to the data path
- var eventsRef = database.ref("student/" + uid);
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const uid = user.uid;
 
- // Retrieve data from Firebase
- eventsRef.once("value")
-   .then(function(snapshot) {
-     snapshot.forEach(function(eventSnapshot) {
-       var eventData = eventSnapshot.val();
-       var eventName = eventData.eventname;
-       var organization = eventData.organization;
-       var date = eventData.date;
+        // Function to retrieve and populate data
+        database.ref("stucertify/" + uid).on("value", (snapshot) => {
+          tableBody.innerHTML = ""; // Clear the table before populating
+          var sno=1
+          snapshot.forEach((userSnapshot) => {
+            userSnapshot.forEach((eventSnapshot) => {
+                
+              const eventDetails = eventSnapshot.val();
+              const eventName = eventDetails.event;
+              const eventDate = eventDetails.date;
+              const organization = eventDetails.organization;
+              const formid = eventDetails.id;
+              console.log(formid)
 
-       // Add a new row to the table
-       var table = document.getElementById("eventTable");
-       var newRow = table.insertRow(-1);
-       var nameCell = newRow.insertCell(0);
-       var orgCell = newRow.insertCell(1);
-       var dateCell = newRow.insertCell(2);
+              const row = document.createElement("tr");
+              row.innerHTML = `
+              <td>${sno}</td>
+                <td>${eventName}</td>
+                <td>${organization}</td>
+                <td>${eventDate}</td>
+                <td><button onclick="copyid(formid)" class="btn">Edit</button></td>
+              `;
 
-       // Populate cells with event details
-       nameCell.innerHTML = eventName;
-       orgCell.innerHTML = organization;
-       dateCell.innerHTML = date;
-     });
-   })
-.catch(function(error) {
-     console.error("Error retrieving data:", error);
-   });
+              tableBody.appendChild(row);
+              sno+=1
+            });
+          });
+        });
+      }
+    });
+  }
+
+function copyid(formid){
+    console.log("in fucntion" +formid)
+
+    localStorage.setItem("id", formid) 
+window.location.href = "edit.html"   
 }
-})
 
 
-//Profile Information
-firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-        var uid = user.uid;
-        firebase.database().ref('user/'+uid).once('value').then(function(snapshot){
-        let name=snapshot.val().name;
-        console.log(name)
-        let role=snapshot.val().role;
-        let reg=snapshot.val().regno;
-        let dob=snapshot.val().dob;
-        let gender=snapshot.val().gender;
-        let address=snapshot.val().address;
-        let state=snapshot.val().state;
-        let religion=snapshot.val().religion;
-        let caste=snapshot.val().caste;
-        let nationality=snapshot.val().nationality;
-        let bloodgroup=snapshot.val().bloodgroup;
-        let aadhar=snapshot.val().aadhar;
-        let phone=snapshot.val().phone;
-        let college=snapshot.val().college;
-        let degree=snapshot.val().degree;
-        let branch=snapshot.val().branch;
-        let father=snapshot.val().father;
-        let mother=snapshot.val().mother;
-        let email=user.email;
-        name = document.getElementById("fullname").value=name;
-        email = document.getElementById("email").value=email;
-        reg=document.getElementById("regno").value=reg;
-        dob=document.getElementById("dob").value=dob;
-        gender=document.getElementById("gender").value=gender;
-        address=document.getElementById("address").value=address;
-        state=document.getElementById("state").value=state;
-        religion=document.getElementById("religion").value=religion;
-        caste=document.getElementById("caste").value=caste;
-        nationality=document.getElementById("nationality").value=nationality;
-        bloodgroup=document.getElementById("bloodgroup").value=bloodgroup;
-        aadhar=document.getElementById("adhar").value=aadhar;
-        phone=document.getElementById("phone").value=phone;
-        college=document.getElementById("college").value=college;
-        degree=document.getElementById("degree").value=degree+'/'+branch;
-        father=document.getElementById("father").value=father;
-        mother=document.getElementById("mother").value=mother;
-        let designation = document.getElementById("desig");
-        if (role === "student")
-        {
-            designation.value = "Student";
+
+
+  function editform(){
+    var a = localStorage.getItem("id")
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          const uid = user.uid;
+
+          const ref = database.ref('stucertify');
+
+  ref.once('value')
+    .then(snapshot => {
+      snapshot.forEach(userSnapshot => {
+        userSnapshot.forEach(eventSnapshot => {
+          eventSnapshot.forEach(dateSnapshot => {
+            dateSnapshot.forEach(detailsSnapshot => {
+              const details = detailsSnapshot.val();
+              if (details.id === id) {
+                // Display the details in your UI
+                console.log(details);
+              }
+            });
+          });
+        });
+      });
+    })
+    .catch(error => {
+      console.error('Error retrieving data:', error);
+    });
+          
+          
         }
-        else{
-            designation.value = "Faculty";
-        }
-})
-    }})
+    })
 
 
-//Profile student
+  }
+
+
+
+
+
+
+
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         var uid = user.uid;
@@ -1193,5 +1274,7 @@ firebase.auth().onAuthStateChanged((user) => {
         console.log(name)
         name = document.getElementById("profile-name").textContent=name;
 
+            })
+    }
 })
-}})
+
