@@ -43,6 +43,7 @@ const firebaseConfig = {
             let branch=snapshot.val().branch;
             let father=snapshot.val().father;
             let mother=snapshot.val().mother;
+            let profile = snapshot.val().profile;
             let email=user.email;
             name = document.getElementById("fullname").value=name;
             email = document.getElementById("email").value=email;
@@ -62,6 +63,11 @@ const firebaseConfig = {
             father=document.getElementById("father").value=father;
             mother=document.getElementById("mother").value=mother;
             let designation = document.getElementById("desig");
+
+            const profileDivElement = document.getElementById("profile-picture");
+            profileDivElement.style.backgroundImage = `url('${profile}')`;
+
+            
             if (role === "student")
             {
                 designation.value = "Student";
@@ -193,8 +199,56 @@ function generateUniqueRandomId(length) {
   return randomId;
 }
 
+//Upload Profile Picture
+function profile() {
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            var uid = user.uid;
+            var profileInput = document.getElementById("profile-picture-input");
+            var profileFile = profileInput.files[0];
 
-  
+            // Check if a file is selected
+            if (profileFile) {
+                const storage = firebase.storage();
+                const storageRef = storage.ref();
+                const filename = "profile/" + profileFile.name;
+
+                // Upload the profile picture to Firebase Storage
+                const uploadTask = storageRef.child(filename).put(profileFile);
+
+                // Listen for state changes of the upload
+                uploadTask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        // Track upload progress (optional)
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log("Upload is " + progress + "% done");
+                    },
+                    (error) => {
+                        // Handle upload error
+                        console.error("Upload error:", error);
+                    },
+                    async () => {
+                        // File uploaded successfully
+
+                        // Get the download URL of the uploaded image
+                        const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+
+                        // Save the download URL to Firebase Realtime Database
+                        const database = firebase.database();
+                        const newUserRef = database.ref("user/" + uid + "/");
+                        newUserRef.update({
+                            profile: downloadURL
+                        });
+                        alert("Profile uploaded successfully");
+                    }
+                );
+            } else {
+                console.log("No file selected.");
+            }
+        }
+    });
+}
 
 
 //INTERN SUBMIT
@@ -1202,7 +1256,8 @@ function filltable() {
                 <td>${eventName}</td>
                 <td>${organization}</td>
                 <td>${eventDate}</td>
-                <td><button onclick="copyid(formid)" class="btn">Edit</button></td>
+                <td><button onclick="copyid('${formid}')" class="btn">Edit</button></td>
+                <td><button onclick="deleteForm('${formid}')" class="btn">Delete</button></td>
               `;
 
               tableBody.appendChild(row);
@@ -1218,14 +1273,29 @@ function copyid(formid){
     console.log("in fucntion" +formid)
 
     localStorage.setItem("id", formid) 
-window.location.href = "edit.html"   
+window.location.href = "/Info_IT/html/edit.html"   
 }
 
 
+//delete form
+function deleteForm(formId) {
+    // Get the form data from Firebase.
+    const formData = firebase.database().ref('forms/' + formId);
+  
+    // Delete the form data.
+    formData.remove();
+  }
+  
+  // Add an event listener to the delete button.
+
+
+
+//edit form
 
 
   function editform(){
     var a = localStorage.getItem("id")
+    console.log(a)
 
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
@@ -1240,7 +1310,7 @@ window.location.href = "edit.html"
           eventSnapshot.forEach(dateSnapshot => {
             dateSnapshot.forEach(detailsSnapshot => {
               const details = detailsSnapshot.val();
-              if (details.id === id) {
+              if (details.id === a) {
                 // Display the details in your UI
                 console.log(details);
               }
@@ -1271,7 +1341,7 @@ firebase.auth().onAuthStateChanged((user) => {
         var uid = user.uid;
         firebase.database().ref('user/'+uid).once('value').then(function(snapshot){
         let name=snapshot.val().name;
-        console.log(name)
+        //console.log(name)
         name = document.getElementById("profile-name").textContent=name;
 
             })
