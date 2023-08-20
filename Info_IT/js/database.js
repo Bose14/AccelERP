@@ -241,6 +241,7 @@ function profile() {
                             profile: downloadURL
                         });
                         alert("Profile uploaded successfully");
+                        fillprofile();
                     }
                 );
             } else {
@@ -1276,60 +1277,102 @@ function copyid(formid){
 window.location.href = "/Info_IT/html/edit.html"   
 }
 
+function deleteForm(formid){
+    lightboxWrapper = document.getElementById("lightboxWrapper");
+    lightboxWrapper.style.display = 'flex';
 
-//delete form
-function deleteForm(formId) {
-    // Get the form data from Firebase.
-    const formData = firebase.database().ref('forms/' + formId);
+    var cancelButton = document.getElementById("cancelButton")
+    var deletebutton = document.getElementById("delconfirm")
+
+    deletebutton.addEventListener('click', () => {
+
+        localStorage.setItem("delid",formid)
+        deleteevents()
+    
+      });
+    
+      cancelButton.addEventListener('click', () => {
+        lightboxWrapper.style.display = 'none';
+      });
+
   
-    // Delete the form data.
-    formData.remove();
-  }
-  
-  // Add an event listener to the delete button.
+        
+   
+   
+
+}
+
+
 
 
 
 //edit form
 
-
-  function editform(){
-    var a = localStorage.getItem("id")
-    console.log(a)
-
+function editform() {
+    var searchId = localStorage.getItem("id");
+    console.log(searchId);
+  
     firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          const uid = user.uid;
-
-          const ref = database.ref('stucertify');
-
-  ref.once('value')
-    .then(snapshot => {
-      snapshot.forEach(userSnapshot => {
-        userSnapshot.forEach(eventSnapshot => {
-          eventSnapshot.forEach(dateSnapshot => {
-            dateSnapshot.forEach(detailsSnapshot => {
-              const details = detailsSnapshot.val();
-              if (details.id === a) {
-                // Display the details in your UI
-                console.log(details);
+      if (user) {
+        const uid = user.uid;
+        const path = `stucertify/${uid}`;
+  
+        const userRef = database.ref(path);
+        userRef.once('value', (snapshot) => {
+          snapshot.forEach((eventSnapshot) => {
+            eventSnapshot.forEach((dateSnapshot) => {
+              const eventData = dateSnapshot.val();
+              if (eventData.id === searchId) {
+                console.log(eventData.organization)
+                console.log('Found match:', eventData);
+                // Display your data here, e.g. update the DOM
               }
             });
           });
         });
-      });
-    })
-    .catch(error => {
-      console.error('Error retrieving data:', error);
+      }
     });
-          
-          
-        }
-    })
-
-
   }
+  
+  
 
+  function deleteevents() {
+    console.log("delete initiated...!")
+    var searchId = localStorage.getItem("delid");
+    console.log(searchId);
+  
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const uid = user.uid;
+        const path = `stucertify/${uid}`;
+  
+        const userRef = database.ref(path);
+        userRef.once('value', (snapshot) => {
+          snapshot.forEach((eventSnapshot) => {
+            eventSnapshot.forEach((dateSnapshot) => {
+              const eventData = dateSnapshot.val();
+              if (eventData.id === searchId) {
+                console.log(eventData.organization);
+                console.log('Found match:', eventData);
+                
+                // Delete the matched data
+                dateSnapshot.ref.remove()
+                  .then(() => {
+                    console.log('Data deleted successfully.');
+                    window.location.reload()
+                    // Perform any further actions or UI updates here
+                  })
+                  .catch((error) => {
+                    console.error('Error deleting data:', error);
+                  });
+              }
+            });
+          });
+        });
+      }
+    });
+  }
+  
 
 
 
@@ -1347,4 +1390,103 @@ firebase.auth().onAuthStateChanged((user) => {
             })
     }
 })
+
+
+function populateForm(data) {
+    const formFields = document.getElementById('formFields');
+    
+    // Clear any existing form fields
+    formFields.innerHTML = '';
+
+    // Create input fields dynamically based on data
+    Object.keys(data).forEach(key => {
+        const label = document.createElement('label');
+        label.className = 'label';
+        label.textContent = key;
+        
+        const input = document.createElement('input');
+        input.className = 'input form-control';
+        input.type = 'text';
+        input.name = key;
+        input.value = data[key];
+
+        if (key === 'certificate' || key === 'id' || key === 'event' || key === 'mode') {
+            input.readOnly = true;
+        }
+        
+        const lineBreak = document.createElement('br');
+        
+        formFields.appendChild(label);
+        formFields.appendChild(input);
+        formFields.appendChild(lineBreak);
+    });
+}
+
+// Your editform() function here to retrieve data from Firebase
+function editform() {
+    var searchId = localStorage.getItem("id");
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            const uid = user.uid;
+            const path = `stucertify/${uid}`;
+
+            const userRef = firebase.database().ref(path);
+            userRef.once('value', (snapshot) => {
+                snapshot.forEach((eventSnapshot) => {
+                    eventSnapshot.forEach((dateSnapshot) => {
+                        const eventData = dateSnapshot.val();
+                        if (eventData.id === searchId) {
+                            populateForm(eventData);
+                        }
+                    });
+                });
+            });
+        }
+    });
+}
+
+// Add an event listener to the form
+document.getElementById('editForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    const updatedData = {};
+    formData.forEach((value, key) => {
+        updatedData[key] = value;
+    });
+
+    // Your code to update data in Firebase here
+    updateDataInFirebase(updatedData);
+});
+
+// Function to update data in Firebase
+function updateDataInFirebase(updatedData) {
+    var searchId = localStorage.getItem("id");
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            const uid = user.uid;
+            const path = `stucertify/${uid}`;
+
+            const userRef = firebase.database().ref(path);
+            userRef.once('value', (snapshot) => {
+                snapshot.forEach((eventSnapshot) => {
+                    eventSnapshot.forEach((dateSnapshot) => {
+                        const eventData = dateSnapshot.val();
+                        if (eventData.id === searchId) {
+                            dateSnapshot.ref.update(updatedData);
+                            console.log("Data updated successfully.");
+                        }
+                    });
+                });
+            });
+        }
+    });
+}
+
+// Call editform() to populate the form with data from Firebase
+
 
