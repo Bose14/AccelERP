@@ -1391,7 +1391,6 @@ firebase.auth().onAuthStateChanged((user) => {
     }
 })
 
-
 function populateForm(data) {
     const formFields = document.getElementById('formFields');
     
