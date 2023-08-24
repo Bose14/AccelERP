@@ -1,9 +1,10 @@
-const searchInput = document.getElementById('searchInput');
-  const searchButton = document.getElementById('searchButton');
+const searchInput = document.getElementById('searchText');
+
   const resultsContainer = document.getElementById('results');
 
-  searchButton.addEventListener('click', () => {
-    const query = searchInput.value.trim();
+  function search(){
+    const query = searchInput.value
+    console.log(query)
     if (query !== '') {
       // Reference to the Firebase database
       const databaseRef = firebase.database().ref('user');
@@ -26,4 +27,4 @@ const searchInput = document.getElementById('searchInput');
         });
       });
     }
-  });
+  }
