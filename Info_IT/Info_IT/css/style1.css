@@ -1,0 +1,36 @@
+body
+{
+background-image: url(../assests/img/bg-info-5.jpg);
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: 100% 100%;
+
+}
+
+nav{
+    background-color: rgb(30, 58, 138);
+}
+nav button{
+    background-color: rgb(30, 58, 138);
+
+}
+.btn{
+    background-color: rgb(30, 58, 138);
+}
+
+.progress-container {
+    width: 100%;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.progress-bar {
+    width: 0;
+    height: 30px;
+    background-color: #4caf50;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+}

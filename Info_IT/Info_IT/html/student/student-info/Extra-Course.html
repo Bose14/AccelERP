@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>  
+  <link rel="stylesheet" href="../../../css/style1.css">
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"> </script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"> </script> 
+  <script src="../../../js/database.js"> </script>        
+  <title>Student Events</title>
+</head>
+<body>
+  <header>
+    <img src="../../../assests/img/header.png" height="10%" width="100%">
+</header>
+<div>
+  <nav class="navbar navbar-light">
+    <div class="container-fluid flex flex-row-reverse px-2">
+      <div >
+        <a href="#" class="text-white text-decoration-none fw-semibold px-3">PROFILE</a>
+        <a href="../../../index.html" class="text-white text-decoration-none fw-semibold px-3">LOGOUT</a>
+      </div>
+</div>
+</nav>
+</div>
+<br>
+<br>
+<div class="container ">
+  <h2><p class="text-white text-center text-">EXTRA COURSES FORM</p></h2>
+</div>
+<br>
+<br>
+<form class="mx-auto col-10 col-md-8 col-lg-6 text-white ">
+  <div class="form-group">
+    <label for="Events">Event</label>
+    <input type="Event" class="form-control" id="exampleEvent" aria-describedby="EvenetHelp" placeholder="Enter the event" value="Extra-Courses" readonly>
+    <small id="Help" class="form-text text-white">Enter the event you performed.</small>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="Platform">Organisation/Platform</label>
+    <input type="Platform" class="form-control" id="exampleOrg" placeholder="Enter the Platform" required>
+    <small id="Help" class="form-text text-white">Enter the platform/Organisation where you have learnt.</small>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="CN">Course Name</label>
+    <input type="CN" class="form-control" id="exampleCN" placeholder="Enter the name of the course" required>
+    <small id="Help" class="form-text text-white">Name of the course which you have learnt.</small>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="Duration">Duration</label>
+    <input type="Duration" class="form-control" id="exampleDuration" placeholder="Enter the Duration of learning" required>
+    <small id="Help" class="form-text text-white">It may be days, weeks or months also.</small>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="Period">Course completed Date</label>
+    <input type="date" class="form-control" id="exampleDate" placeholder="Enter the Date When the certificate Issued (dd-mm-yy)" required>
+    <small id="Help" class="form-text text-white">Enter the date when Certificate Issued</small>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="Mode">Which Mode You participated?</label>
+  <select class="form-select" aria-label="Default select example" id="exampleMode" required>
+    <option selected>Click here</option>
+    <option value="Physical">Physical</option>
+    <option value="Virtual">Virtual</option>
+  </select>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="exampleFormControlFile1">Upload the certificate</label>
+    <input type="file" class="form-control-file" id="exampleFormControlFile1" required>
+  </div>
+  <br> 
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar"></div>
+</div>
+
+
+<p id="error"></p>
+ <a class="btn btn-primary submit text-white " onclick="submitextracourses()" role="button">Submit</a>
+</form>
+<br>
+<br>
+
+  
+</body>
+</html>

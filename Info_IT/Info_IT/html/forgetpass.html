@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forget Password</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"> </script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"> </script> 
+    <script src="../js/database.js"> </script> 
+</head>
+<body>
+    <header>
+        <img src="../assests/img/header.png" alt="">
+    </header>
+    <div class="container min-h-screen max-w-screen-2xl bg-[url('../assests/img/background.png')] bg-center bg-cover ">
+        <div>
+            <nav class="bg-blue-900 shadow-lg">
+                <div class="max-w-6xl mx-auto px-4">
+                    <div class="flex justify-between">
+                        <div class="flex space-x-7">
+                                <span class="font-semibold text-white text-lg my-auto">
+                                    KSRIET
+                                </span>
+                        </div>
+                        <div class="hidden md:flex items-center space-x-1">
+                                <a href="../index.html" class="py-4 px-2 text-white  hover:text-pink-700 font-semibold">HOME</a>
+                                <a href="./student/student-login.html" class="py-4 px-2 text-white  hover:text-pink-700 font-semibold">STUDENT</a>
+                                <a href="./faculty/faculty-login.html" class="py-4 px-2 text-white font-semibold hover:text-pink-700 transition duration-300">FACULTY</a>
+                                <a href="./admin/admin-login.html" class="py-4 px-2 text-white font-semibold hover:text-pink-700 transition duration-300">ADMIN</a>
+                            </div>
+            
+                            <div class="md:hidden flex items-center">
+                                <button class="outline-none menu-button">
+                                        <svg class="w-6 h-6 text-white" x-show="! showMenu" fill="none" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-width="3" viewBox="0 00 24 24" stroke="currentColor"><path d="m4 6h16M4 12h16M4 18h16"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden mobile-menu">
+                        <ul class="px-auto">
+                           <hr>
+                            <li>
+                                <a href="../index.html" class="flex justify-center text-sm px-2 py-1 hover:text-pink-700 text-white font-semibold">HOME</a>
+                            </li>
+                            <hr>
+                            <li>
+                                <a href="./student/student-login.html" class="flex justify-center text-sm px-2 py-1 hover:text-pink-700 text-white font-semibold">STUDENT</a>
+                            </li>
+                            <hr>
+                            <li>
+                                <a href="./faculty/faculty-login.html" class="flex justify-center text-sm px-2 py-1 hover:text-pink-700 text-white font-semibold">FACULTY</a>
+                            </li>
+                            <hr>
+                            <li>
+                                <a href="./admin/admin-login.html" class="flex justify-center text-sm px-2 py-1 hover:text-pink-700 text-white font-semibold">ADMIN</a>
+                            </li>
+                            <hr>
+                        </ul>
+                    </div>
+            </nav>
+        </div>
+        <div class="flex justify-center items-center px-2 mt-20 pt-10 ">
+            <div class="w-96 p-6 shadow-lg bg-slate-100/60 rounded-md">
+                <h1 class="text-3xl block text-center font-semibold"><i class="fa-solid fa-user"></i> Reset Password</h1>
+                <hr class="mt-3">
+                <div class="mt-3">
+                    <label for="Email" class="block text-base mb-2">Email</label>
+                    <input type="email" id="email" class="border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 rounded" placeholder="Enter Email" />
+                </div>
+                <div class="mt-5">
+                    <button type="submit" onclick="forget()" class="border-2 border-blue-900 bg-blue-900 text-white py-1 w-full rounded-md hover:bg-transparent hover:text-blue-900 font-semibold"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;&nbsp;submit</button>
+                </div>
+            </div>
+        </div>
+</div>
+
+<script src="../js/script.js"></script>
+</body>
+</html>

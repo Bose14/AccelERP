@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
+  <link rel="stylesheet" href="../../../css/style1.css">       
+
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"> </script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"> </script>
+    <script src="../../../js/database.js"></script>
+    <title>Student Events</title>
+</head>
+<body>
+  <header>
+    <img src="../../../assests/img/header.png" height="10%" width="100%">
+</header>
+<div>
+  <nav class="navbar navbar-light ">
+    <div class="container-fluid flex flex-row-reverse px-2">
+      <div >
+        <a href="#" class="text-white text-decoration-none fw-semibold px-3">PROFILE</a>
+        <a href="../../../index.html" class="text-white text-decoration-none fw-semibold px-3">LOGOUT</a>
+      </div>
+</div>
+</nav>
+</div>
+<br>
+<br>
+<div class="container ">
+  <h2><p class="text-white text-center text-">OTHER EVENT FORM</p></h2>
+</div>
+<br>
+<br>
+<form class="mx-auto col-10 col-md-8 col-lg-6 text-white  ">
+  <div class="form-group">
+    <label for="Events">Event Name</label>
+    <input type="text" class="form-control" id="exampleEvent" aria-describedby="EvenetHelp" placeholder="Enter the event" >
+    <small id="Help" class="form-text text-white">Enter the event you performed.</small>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="Organisation">Organisation</label>
+    <input type="text" class="form-control" id="exampleOrg" placeholder="Enter the Organisation" required>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="Period">Duration of the event</label>
+    <input type="Period" class="form-control" id="exampleDuration" placeholder="Enter the Duration" required>
+    <small id="Help" class="form-text text-white">It may be days, weeks or months also.</small>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="Period">Enter the Date</label>
+    <input type="date" class="form-control" id="exampleDate" placeholder="Enter the Date" required>
+    <small id="Help" class="form-text text-white">Enter the date of the event conducted</small>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="Domain">Domain</label>
+    <input type="text" class="form-control" id="exampleDomain" placeholder="Enter the Domain Name" required>
+    <small id="Help" class="form-text text-white">Based on which domain have you Participated</small>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="Mode">Which Mode You participated?</label>
+  <select class="form-select" aria-label="Default select example" id="exampleMode" required>
+    <option selected>Click here</option>
+    <option value="physical">Physical</option>
+    <option value="virtual">Virtual</option>
+  </select>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="exampleFormControlFile1">Upload the certificate</label>
+    <input type="file" class="form-control-file" id="exampleFormControlFile1" required>
+  </div>
+  <br> 
+  <br> 
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar"></div>
+</div>
+
+
+  <p id="error"></p>
+  <a class="btn btn-primary submit text-white " onclick="submitother()" role="button">Submit</a>
+</form>
+<br>
+<br>
+</body>
+</html>

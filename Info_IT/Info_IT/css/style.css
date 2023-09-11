@@ -1,0 +1,101 @@
+body
+{
+background-image: url(../assests/img/bg-stu.png);
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: 100% 100%;
+
+}
+nav{
+    background-color: rgb(30, 58, 138);
+}
+nav button{
+    background-color: rgb(30, 58, 138);
+}
+th, thead{
+    position: sticky;
+    top: 0;
+  }
+
+  #eventTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  #eventTable th,
+  #eventTable td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  #eventTable th {
+    background-color: #f2f2f2;
+  }
+  
+  /* Responsive design for smaller screens */
+  @media screen and (max-width: 600px) {
+    #eventTable {
+      font-size: 12px;
+    }
+  }
+
+
+
+  .lightbox-wrapper {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  .lightbox-container {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 90%;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 45%;
+  }
+  
+  .button.cancel {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
+  .button.delete {
+    background-color: #e74c3c;
+    color: #fff;
+  }

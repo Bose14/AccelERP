@@ -1,0 +1,165 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+body {
+  background-image: url('https://i.pinimg.com/564x/15/65/24/15652448d58035bb4cc57613c60bc41a.jpg');
+	background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+	font-family: "Roboto", sans-serif;
+}
+nav{
+  background-color: rgb(30, 58, 138);
+}
+nav button{
+  background-color: rgb(30, 58, 138);
+}
+
+.btn{
+  background-color: rgb(30, 58, 138);
+
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+    color: #fff;
+    background-color:rgb(30, 58, 138);
+}
+
+.shadow {
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.fa-regular fa-image{
+	font-size: 80px;
+}
+
+.profile-tab-nav {
+	min-width: 250px;
+}
+
+.tab-content {
+	flex: 1;
+}
+
+.form-group {
+	margin-bottom: 1.5rem;
+}
+
+.nav-pills a.nav-link {
+	padding: 15px 20px;
+	border-bottom: 1px solid #ddd;
+	border-radius: 0;
+	color: #333;
+}
+.nav-pills a.nav-link i {
+	width: 20px;
+}
+
+.img-circle img {
+	height: 100px;
+	width: 100px;
+	border-radius: 100%;
+	border: 5px solid #fff;
+}
+
+
+
+.profile-pic {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+    vertical-align: middle;
+    text-align: center;
+    color: transparent;
+    transition: all .3s ease;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.profile-pic:hover {
+    background-color: rgba(0,0,0,.5);
+    z-index: 10000;
+    color: #fff;
+    transition: all .3s ease;
+    text-decoration: none;
+}
+
+.profile-pic span {
+    display: inline-block;
+    padding-top: 4.5em;
+    padding-bottom: 4.5em;
+}
+
+form input[type="file"] {
+          display: none;
+          cursor: pointer;
+ }
+
+
+
+
+ #dropFileForm {
+    margin: 16px;
+    text-align: center;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: 0.5s;
+  }
+  
+  #dropFileForm #fileLabel {
+    background-color:#fff;
+    display: block;
+    padding: 16px;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  #dropFileForm #fileInput {
+    display: none;
+  }
+  
+  #dropFileForm #fileLabel:after,
+  #dropFileForm #fileLabel:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: -2;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  #dropFileForm #fileLabel:before {
+    z-index: -1;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 5%,
+      black 5%,
+      black 10%
+    );
+    opacity: 0;
+    transition: 0.5s;
+  }
+  
+  #dropFileForm.fileHover #fileLabel:before {
+    opacity: 0.25;
+  }
+  
+  #dropFileForm .uploadButton {
+    border: 0;
+    outline: 0;
+    width: 100%;
+    padding: 8px;
+    background-color: rgb(30, 58, 138);
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  #dropFileForm.fileHover {
+    box-shadow: 0 0 16px rgb(214, 221, 241);
+  }
+  
