@@ -17,6 +17,15 @@ const firebaseConfig = {
   var database_ref = database.ref(); 
   const storage = firebase.storage();
 
+  var global_uid;
+  const preloadedImages = {};
+
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        global_uid = user.uid;
+    }
+})
+
 
   function fillprofile(){
     //Profile Information
@@ -94,7 +103,8 @@ const firebaseConfig = {
             //var mobile=snapshot.val().mobile;
 
             if(role=="student"){
-                window.location.href="/Info_IT/html/student/student-info/student.html"
+                alert("Yes")
+                window.location.href="student-info/student.html"
                 
             }
             else{
@@ -127,7 +137,7 @@ function faclogin(){
             //var mobile=snapshot.val().mobile;
 
             if(role=="faculty"){
-                window.location.href="/Info_IT/html/faculty/faculty-info/faculty.html"
+                window.location.href="faculty-info/faculty.html"
             }
             else{
                 alert("You are not a faculty");
@@ -156,7 +166,7 @@ function adlogin(){
             //var mobile=snapshot.val().mobile;
 
             if(role=="admin"){
-                window.location.href="/Info_IT/html/admin/admin-info/admin-info.html"
+                window.location.href="admin-info/admin-info.html"
             }
             else{
                 alert("You are not an Admin");
@@ -311,12 +321,30 @@ function submitintern(){
             },
             async () => {
                 // File uploaded successfully
+                
+              
 
                 // Get the download URL of the uploaded image
                 const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
 
                 // Save the download URL to Firebase Realtime Database
                 const newUserRef = database.ref("stucertify/"+uid+"/"+event+"/"+startdate+"/")
+
+                firebase.database().ref('user/'+global_uid).once('value').then(function(snapshot){
+                    var count=snapshot.val().count;
+                    if(count=="undefined"||count==undefined||count==null||count==NaN){
+                        count=0;
+                    }
+                    var updatecount=count+1
+
+
+                const dbref = database.ref("user/"+uid+"/");
+                dbref.update({
+                    count: updatecount
+                })
+
+                })
+
                 newUserRef.set({
                   event: event,
                   organization: org,
@@ -330,8 +358,9 @@ function submitintern(){
                   id:randomId
                 
                 })
-                alert("File uploaded successfully and URL saved to database!");
+                alert("Successfully Saved!");
                 window.location.href="/Info_IT/html/student/student-info/student.html"
+            
             }
         );
         }
@@ -1491,3 +1520,442 @@ function updateDataInFirebase(updatedData) {
 
 
 
+//for admin displaying student records this function below is used
+
+
+// Function to generate a card for each user and append it to the specified section
+function createUserCard(userId, userData, section) {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const userName = userData.name;
+    const year = userData.year;
+    const semester = userData.semester;
+    const count = userData.count;
+    const regno = userData.regno
+    const branch = userData.branch;
+    const uid = userData.uid;
+    //console.log("Card Created for "+userName+" and his/her userId is: "+uid)
+    
+    var profileImage = userData.profile;
+
+    if(profileImage=="undefined"|| profileImage==undefined|| profileImage=="null" || profileImage==null ||  profileImage==NaN){
+        profileImage = "https://firebasestorage.googleapis.com/v0/b/accelerp-2c3ce.appspot.com/o/image-removebg-preview%20(5).png?alt=media&token=b03c4c4f-4bd9-4ffb-b54b-b18bd97455fc"
+    }
+
+    card.innerHTML = `
+        <img src="${profileImage}" alt="${userName}'s Profile Image" class="profile-image">
+        <h2>${userName}</h2>
+        <h3>[ ${regno} ]</h3> <!-- Display registration number -->
+        <p>Year: ${year}</p>
+        <p>Semester: ${semester}</p>
+        <strong>${branch}</strong>
+        <h6>Certification Count: <span class="card-count">${count}</span></h6>
+    `;
+
+    card.dataset.userId = uid;
+    card.dataset.profile = profileImage;
+    card.dataset.name = userName;
+    card.dataset.branch = branch;
+    card.dataset.year = year;
+    card.dataset.semester = semester;
+    card.dataset.regno = regno;
+   
+    // Add a click event listener to the card
+    card.addEventListener('click', () => {
+        // Copy the user's UID to localStorage
+        localStorage.setItem('selectedUserId', userId);
+        window.location.href="events-stu-rec.html";
+    });
+
+    section.appendChild(card);
+}
+
+
+// Function to fetch and display user data
+function displayUserData() {
+    const usersRef = database.ref('user'); // Change 'users' to your Firebase database path
+
+    usersRef.on('child_added', (snapshot) => {
+        const userId = snapshot.key;
+        const userData = snapshot.val();
+
+        // Check if the user's role is "student"
+        if (userData.role === 'student') {
+            const year = userData.year;
+
+            // Create or select the section element for the corresponding year
+            let yearSection = document.getElementById(`year-${year}-section`);
+            if (!yearSection) {
+                // If the section doesn't exist, create it
+                yearSection = document.createElement('div');
+                yearSection.id = `year-${year}-section`;
+                yearSection.className = 'year-section';
+                yearSection.innerHTML = `<h2>${year} Year</h2>`;
+                document.getElementById('card-container').appendChild(yearSection);
+            }
+
+            createUserCard(userId, userData, yearSection);
+        }
+    });
+}
+
+
+
+function filterUserCards() {
+    console.log("filtering...")
+    const searchInput = document.getElementById('search-input');
+    const filter = searchInput.value.toLowerCase();
+
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach((card) => {
+        const userName = card.querySelector('h2').textContent.toLowerCase();
+        const regNo = card.querySelector('h3').textContent.toLowerCase();
+
+        if (userName.includes(filter) || regNo.includes(filter)) {
+            card.style.display = 'block'; // Show matching cards
+        } else {
+            card.style.display = 'none'; // Hide non-matching cards
+        }
+    });
+}
+
+
+
+
+
+
+// ... Your existing JavaScript code ...
+
+
+
+function filterUserCardsByDepartment(department) {
+    console.log("Selected filter is dept "+ department)
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach((card) => {
+        const userDepartment = card.querySelector('strong').textContent.toLowerCase();
+        if (userDepartment === department) {
+            card.style.display = 'block'; // Show matching cards
+        } else {
+            card.style.display = 'none'; // Hide non-matching cards
+        }
+    });
+}
+
+
+
+
+function filterAndSortUserCardsByCount(countFilter) {
+    const cardContainer = document.getElementById('card-container');
+    const cards = Array.from(document.querySelectorAll('.card'));
+
+    // Convert cards NodeList to an array for sorting
+
+    // Sort the cards by certification count
+    cards.sort((a, b) => {
+        const countA = extractCertificationCount(a);
+        const countB = extractCertificationCount(b);
+
+        if (countFilter === 'Greater') {
+            return countB - countA; // Sort in descending order (most to least)
+        } else if (countFilter === 'Shorter') {
+            return countA - countB; // Sort in ascending order (least to most)
+        }
+    });
+
+    // Display the sorted cards
+    cardContainer.innerHTML = ''; // Clear the card container
+
+    cards.forEach((card) => {
+        cardContainer.appendChild(card);
+    });
+}
+
+
+
+
+function extractCertificationCount(card) {
+    const countElement = card.querySelector('h6');
+    const countText = countElement.textContent;
+    const match = countText.match(/\d+/); // Extract the number from the text
+
+    if (match) {
+        return parseInt(match[0], 10);
+    } else {
+        return 0; // Default value if no count is found
+    }
+}
+
+
+
+
+
+
+
+// Event listener for the download button
+function download(){
+
+    document.getElementById("download-button").innerHTML="Downloading...!"
+    // Get the filtered cards
+    const filteredCards = getFilteredCards();
+
+    // Create a new workbook
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Filtered Users');
+
+    // Define column headers
+    worksheet.addRow(['Name', 'Year & Semester', 'Certification Count']);
+
+    // Extract and format the data from filtered cards
+    filteredCards.forEach((card) => {
+        const name = card.querySelector('h2').textContent;
+        const yearSemester = card.querySelector('h3').textContent;
+        const count = extractCertificationCount(card);
+        worksheet.addRow([name, yearSemester, count]);
+    });
+
+    // Generate the Excel file as a blob
+    workbook.xlsx.writeBuffer().then((data) => {
+        const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+        // Create a download link and trigger the download
+        const downloadLink = document.createElement('a');
+        const fileName = 'filtered_users.xlsx';
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = fileName;
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    });
+}
+
+// Function to get the filtered cards
+function getFilteredCards() {
+    const cards = document.querySelectorAll('.card');
+    const filteredCards = [];
+
+    // Add logic here to filter the cards (based on department, year, count, etc.)
+    // For now, let's assume all cards are filtered and return them all
+    cards.forEach((card) => {
+        if (card.style.display !== 'none') {
+            filteredCards.push(card);
+        }
+    });
+
+    return filteredCards;
+}
+
+
+
+
+async function downloadpdf() {
+
+    document.getElementById("download-pdf-button").innerHTML="Downloading...!"
+    // Get the filtered cards (already displayed)
+    const filteredCards = getFilteredCards();
+
+    // Define a content array for pdfmake
+    const pdfContent = [];
+
+    // Define a style for keys (brown color and capitalize first letter)
+    const keyStyle = {
+        color: 'brown',
+        bold: true,
+        margin: [0, 5, 0, 0], // Adjust margin as needed
+        decoration: 'underline', // Underline the keys
+    };
+
+    // Iterate over the filtered cards
+    for (const card of filteredCards) {
+        try {
+            // Extract user details from each card (adjust as per your HTML structure)
+            const name = card.dataset.name;
+            const branch = card.dataset.branch;
+            const year = card.dataset.year;
+            const semester = card.dataset.semester;
+            const regno = card.dataset.regno;
+            const uid = card.dataset.userId;
+            console.log(name+" "+uid)
+
+            // Define user card content with the profile image
+            const userCardContent = [
+                {
+                    stack: [
+                        {
+                            text: 'User Details',
+                            style: 'header',
+                        },
+                        {
+                            text: `Name: ${name}`,
+                        },
+                        {
+                            text: `Branch: ${branch}`,
+                        },
+                        {
+                            text: `Year: ${year}`,
+                        },
+                        {
+                            text: `Semester: ${semester}`,
+                        },
+                        {
+                            text: `Reg No: ${regno}`,
+                        },
+                    ],
+                    alignment: 'left', // Align the user card to the left
+                    margin: [0, 0, 0, 10], // Adjust margins as needed
+                },
+            ];
+
+            // Retrieve additional info for the user from 'stucertify'
+            const userStucertifySnapshot = await firebase.database().ref(`stucertify/${uid}`).once('value');
+
+           
+            const userStucertifyData = userStucertifySnapshot.val();
+
+
+            if(userStucertifyData==null||userStucertifyData==undefined||userStucertifyData=="undefined"){
+                pdfContent.push(userCardContent);
+            
+            }
+
+            else{
+
+            // Group additional information by date
+            const additionalInfoByDate = {};
+
+            // Iterate over 'eventname' keys
+            for (const eventName in userStucertifyData) {
+                if (userStucertifyData.hasOwnProperty(eventName)) {
+                    // Get 'eventname' data
+                    const eventnameData = userStucertifyData[eventName];
+
+                    // Iterate over 'date' keys
+                    for (const date in eventnameData) {
+                        if (eventnameData.hasOwnProperty(date)) {
+                            if (!additionalInfoByDate[date]) {
+                                additionalInfoByDate[date] = [];
+                            }
+
+                            // Iterate over the keys in dateData and add them to the group
+                            for (const key in eventnameData[date]) {
+                                if (eventnameData[date].hasOwnProperty(key)) {
+                                    additionalInfoByDate[date].push({
+                                        key: key.charAt(0).toUpperCase() + key.slice(1), // Capitalize first letter
+                                        value: eventnameData[date][key],
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Iterate over the grouped additional information and create tables
+            for (const date in additionalInfoByDate) {
+                if (additionalInfoByDate.hasOwnProperty(date)) {
+                    const dateData = additionalInfoByDate[date];
+
+                    // Sort the data by key with the desired order
+                    dateData.sort((a, b) => {
+                        const keyOrder = {
+                            Event: 0,
+                            Date: 1,
+                            Certificate: 2,
+                        };
+
+                        const keyA = a.key.toLowerCase();
+                        const keyB = b.key.toLowerCase();
+
+                        return keyOrder[keyA] - keyOrder[keyB];
+                    });
+
+                    // Create a table for additional info for each date
+                    const additionalInfoTable = {
+                        table: {
+                            headerRows: 1,
+                            widths: ['auto', '*'], // Adjust column widths as needed
+                            body: [
+                                // Header row
+                                [{ text: 'Fields', style: keyStyle }, { text: 'Data', style: keyStyle }],
+                            ],
+                        },
+                        layout: {
+                            hLineWidth: function (i, node) {
+                                return (i === 0) ? 1 : 0; // Add line for the header row only
+                            },
+                            hLineColor: function (i, node) {
+                                return 'gray'; // Color of horizontal lines
+                            },
+                        },
+                    };
+
+                    // Add rows to the additional info table
+                    for (const info of dateData) {
+                        if (info.key === 'certificate' || info.key === 'Certificate') {
+                            additionalInfoTable.table.body.push([{ text: info.key, link: info.value, bold: false}, {text: 'click here', link: info.value, color: 'blue'}]);
+                        } else if (info.key === 'event' || info.key === 'Event') {
+                            additionalInfoTable.table.body.push([{ text: info.key, bold: true, color: 'red', fontSize: 14 }, {text:info.value,bold: true, color:'red',fontSize: 14 }]);
+                        } else {
+                            additionalInfoTable.table.body.push([info.key, info.value]);
+                        }
+                    }
+
+                    // Push the user card content followed by the additional info table to pdfContent
+                    pdfContent.push(userCardContent, additionalInfoTable);
+                }
+            }
+            }
+        } catch (error) {
+            console.error('Error retrieving stucertify data from Firebase:', error);
+            document.getElementById("download-pdf-button").innerHTML="Error Occured! Contact Admin support."
+        }
+    
+    }//closing filtered cards iteration forloop
+
+    // Define the PDF document definition using pdfmake
+    const documentDefinition = {
+        content: pdfContent,
+        styles: {
+            header: {
+                fontSize: 16,
+                bold: true,
+                margin: [0, 10, 0, 5],
+            },
+        },
+    };
+
+    // Generate the PDF using pdfmake
+    pdfMake.createPdf(documentDefinition).download('filtered_users.pdf');
+}
+
+
+
+
+
+
+
+
+  function getFilteredCards() {
+    const cards = document.querySelectorAll('.card');
+    const filteredCards = [];
+  
+    // Add logic here to filter the cards (based on department, year, count, etc.)
+    // For now, let's assume all cards are filtered and return them all
+    cards.forEach((card) => {
+        if (card.style.display !== 'none') {
+            filteredCards.push(card);
+        }
+    });
+  
+    return filteredCards;
+  }
+  
+  // Function to extract certification count (same as before)
+  function extractCertificationCount(card) {
+    const countText = card.querySelector('h6').textContent;
+    const match = countText.match(/\d+/);
+    return match ? parseInt(match[0]) : 0;
+  }

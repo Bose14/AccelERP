@@ -2,95 +2,552 @@
     <head>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <script src="https://cdn.tailwindcss.com"></script>
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.2/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.2/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.2.0/exceljs.min.js"></script>
+
+
+
         <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"> </script>
-        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"> </script> 
-        <script src="./../../js/database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"> </script>
+         
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.3/html2canvas.min.js"></script>
+
+
+        <script src="./../../../js/database.js"></script>
+        <script src="./../../../js/admin.js"></script>
         <script src=""></script>
+
+
     </head>
 
-<body>
+<body onload="displayUserData()">
   <header>
     <img src="../../../assests/img/header.png" alt="">
   </header>
-<div class="container min-h-screen max-w-screen-2xl bg-[url('../../../assests/img/background.png')] bg-center bg-cover ">
-    <div>
-        <nav class="bg-blue-900 shadow-lg">
-            <div class="max-w-6xl mx-auto px-4">
-                <div class="flex justify-between">
-                    <div class="flex space-x-7">
-                            <span class="font-semibold text-white text-lg my-auto">
-                                ADMIN
-                            </span>
-                    </div>
-                    <div class="hidden md:flex items-center space-x-1">
-                            <a href="stu-rec.html" class="py-4 px-3 text-white  hover:text-pink-700 font-semibold">STUDENT-RECORDS</a>
-                            <a href="fac-rec.html" class="py-4 px-3 text-white font-semibold hover:text-pink-700 transition duration-300">FACULTY-RECORDS</a>
-                            <a href="../../../index.html" class="py-4 px-3 text-white font-semibold hover:text-pink-700 transition duration-300">LOGOUT</a>
-                        </div>
-        
-                        <div class="md:hidden flex items-center">
-                            <button class="outline-none menu-button">
-                                    <svg class="w-6 h-6 text-white" x-show="! showMenu" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="3" viewBox="0 00 24 24" stroke="currentColor"><path d="m4 6h16M4 12h16M4 18h16"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="hidden mobile-menu">
-                    <ul class="px-auto">
-                        <hr>
-                        <li>
-                            <a href="stu-rec.html" class="flex justify-center text-sm px-2 py-1 hover:text-pink-700 text-white font-semibold">STUDENT-RECORDS</a>
-                        </li>
-                        <hr>
-                        <li>
-                            <a href="fac-rec.html" class="flex justify-center text-sm px-2 py-1 hover:text-pink-700 text-white font-semibold">FACULTY-RECORDS</a>
-                        </li>
-                        <hr>
-                        <li>
-                            <a href="../../../index.html" class="flex justify-center text-sm px-2 py-1 hover:text-pink-700 text-white font-semibold">LOGOUT</a>
-                        </li>
-                        <hr>
-                    </ul>
-                </div>
-        </nav>
-    </div>
 
 
-   <div class="w-full max-w-md mx-auto mt-10">
-  <div class="flex justify-between">
-    <input id="searchText" type="text" class="w-full border-2 border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Search...">
-    <div class="flex items-center">
-      <div class="relative">
-        <select class="dropdown w-20 border-2 border-gray-300 rounded-md px-2 py-1">
-          <option value="all">All</option>
-          <option value="products">Products</option>
-          <option value="articles">Articles</option>
-          <option value="images">Images</option>
-        </select>
+
+
+  <div class="search-bar">
+    <input type="text" id="search-input" placeholder="Search by Name or Reg No">
+</div>
+
+<!-- ... Your existing HTML ... -->
+
+<div class="filter-bar">
+  <div class="filter-dropdown" id="filter-dropdown">
+      <i class="fas fa-filter"></i> Filter
+      <div class="filter-options" id="filter-options">
+          <div class="filter-option" id="dept-filter">
+              <i class="fas fa-building"></i> Department
+              <div class="submenu" id="dept-submenu">
+                  <div class="submenu-item" id="it-filter">IT</div>
+                  <div class="submenu-item" id="cse-filter">CSE</div>
+                  <div class="submenu-item" id="ece-filter">ECE</div>
+                  <div class="submenu-item" id="eee-filter">EEE</div>
+                  <div class="submenu-item" id="mech-filter">Mech</div>
+                  <div class="submenu-item" id="bme-filter">BME</div>
+                  <div class="submenu-item" id="cybersecurity-filter">Cybersecurity</div>
+              </div>
+          </div>
+          <div class="filter-option" id="dept-year-filter">
+              <i class="fas fa-calendar-alt"></i> Department & Year
+              <div class="submenu" id="dept-year-submenu">
+                  <!-- Add submenu items for departments and years here -->
+                  <div class="submenu-item" id="it-1">IT-1st year</div>
+                  <div class="submenu-item" id="it-2">IT-2nd year</div>
+                  <div class="submenu-item" id="it-3">IT-3rd year</div>
+                  <div class="submenu-item" id="it-4">IT-4th year</div>
+
+                  <div class="submenu-item" id="cse-1">CSE-1st year</div>
+                  <div class="submenu-item" id="cse-2">CSE-2nd year</div>
+                  <div class="submenu-item" id="cse-3">CSE-3rd year</div>
+                  <div class="submenu-item" id="cse-4">CSE-4th year</div>
+
+                  <div class="submenu-item" id="ece-1">ECE-1st year</div>
+                  <div class="submenu-item" id="ece-2">ECE-2nd year</div>
+                  <div class="submenu-item" id="ece-3">ECE-3rd year</div>
+                  <div class="submenu-item" id="ece-4">ECE-4th year</div>
+
+                  <div class="submenu-item" id="eee-1">EEE-1st year</div>
+                  <div class="submenu-item" id="eee-2">EEE-2nd year</div>
+                  <div class="submenu-item" id="eee-3">EEE-3rd year</div>
+                  <div class="submenu-item" id="eee-4">EEE-4th year</div>
+
+                  <div class="submenu-item" id="bme-1">BME-1st year</div>
+                  <div class="submenu-item" id="bme-2">BME-2nd year</div>
+                  <div class="submenu-item" id="bme-3">BME-3rd year</div>
+                  <div class="submenu-item" id="bme-4">BME-4th year</div>
+
+                  <div class="submenu-item" id="mech-1">MECH-1st year</div>
+                  <div class="submenu-item" id="mech-2">MECH-2nd year</div>
+                  <div class="submenu-item" id="mech-3">MECH-3rd year</div>
+                  <div class="submenu-item" id="mech-4">MECH-4th year</div>
+
+                  <div class="submenu-item" id="cyber-1">Cyber-1st year</div>
+                  <div class="submenu-item" id="cyber-2">Cyber-2nd year</div>
+                  <div class="submenu-item" id="cyber-3">Cyber-3rd year</div>
+                  <div class="submenu-item" id="cyber-4">Cyber-4th year</div>
+              </div>
+          </div>
+          <div class="filter-option" id="count-filter">
+              <i class="fas fa-certificate"></i> Certification Count
+              <div class="submenu" id="count-submenu">
+                  <div class="submenu-item" id="greater-filter">Greater</div>
+                  <div class="submenu-item" id="shorter-filter">Shorter</div>
+              </div>
+          </div>
       </div>
-      <div>
-        <button type="button" id="searchButton" onclick="search()"  class="border-2 border-blue-900 bg-blue-900 text-white py-1 w-20 rounded-md hover:bg-transparent hover:text-blue-900 font-semibold">SUBMIT</button>
-    </div>
-    <div id="results"></div>
-    </div>
   </div>
 </div>
 
 
+<button id="export">Export Data</button>
 
-
-
-
-
-
-
-
-
-
+<!-- Lightbox Container -->
+<div id="lightbox" class="lightbox">
+    <div class="lightbox-content">
+        <b><h2 class="title">Export Data</h2></b>
+        <p class="brown-text">The filtered students will only be exported...</p>
+        <u><a style="color: blue;" href="stu-rec.html">Remove Filters</a></u>
+        <br>
+        <br>
+        <p class="instructions">Choose your format:</p>
+        
+        <div class="button-container">
+            <p class="button-description"><i>1. EXCEL:</i> Only Student's personal Data will be exported</p>
+            <button id="download-button" class="download-button">
+                <i class="fas fa-download"></i> Download Excel
+            </button>
+          
+        </div>
+        <br>
+        <div class="button-container">
+            <p class="button-description"><i>2. PDF: </i>Both Student's personal data and Certification Data are exported</p>
+            <button id="download-pdf-button" class="download-button">
+                <i class="fas fa-file-pdf"></i> Download PDF
+            </button>
+           
+        </div>
+        <button id="close-lightbox" class="close-button"><i class="fas fa-times"></i></button>
+    </div>
 </div>
+
+<!-- ... Your existing HTML ... -->
+
+
+
+  <div class="container" id="card-container"></div>
+  <div id="pdf-content"></div>
+
+  <!-- User cards will be populated here -->
+</div>
+
+<script>
+
+const downloadPdfButton = document.getElementById('download-pdf-button');
+downloadPdfButton.addEventListener('click', async () => {
+
+    downloadpdf();
+
+})
+
+const downloadButton = document.getElementById('download-button');
+downloadButton.addEventListener('click', () => {
+   download()
+})
+
+
+ document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('search-input');
+    searchInput.addEventListener('input', filterUserCards);
+ })
+
+ const filterDropdown = document.getElementById('filter-dropdown');
+const filterOptions = document.getElementById('filter-options');
+const deptFilter = document.getElementById('dept-filter');
+const deptYearFilter = document.getElementById('dept-year-filter');
+const countFilter = document.getElementById('count-filter');
+
+filterDropdown.addEventListener('click', () => {
+    filterOptions.style.display = filterOptions.style.display === 'block' ? 'none' : 'block';
+});
+
+// Show/hide submenus based on filter selection
+const deptSubmenu = document.getElementById('dept-submenu');
+const deptYearSubmenu = document.getElementById('dept-year-submenu');
+const countSubmenu = document.getElementById('count-submenu');
+
+deptFilter.addEventListener('click', () => {
+    deptSubmenu.style.display = deptSubmenu.style.display === 'block' ? 'none' : 'block';
+    deptYearSubmenu.style.display = 'none';
+    countSubmenu.style.display = 'none';
+});
+
+deptYearFilter.addEventListener('click', () => {
+    deptYearSubmenu.style.display = deptYearSubmenu.style.display === 'block' ? 'none' : 'block';
+    deptSubmenu.style.display = 'none';
+    countSubmenu.style.display = 'none';
+});
+
+countFilter.addEventListener('click', () => {
+    countSubmenu.style.display = countSubmenu.style.display === 'block' ? 'none' : 'block';
+    deptSubmenu.style.display = 'none';
+    deptYearSubmenu.style.display = 'none';
+});
+
+
+
+  const itFilter = document.getElementById('it-filter');
+    const cseFilter = document.getElementById('cse-filter');
+    const eceFilter = document.getElementById('ece-filter');
+    const eeeFilter = document.getElementById('eee-filter')
+    const bmeFilter = document.getElementById('bme-filter')
+    const mechFilter = document.getElementById('mech-filter')
+    const cybersecurityFilter = document.getElementById('cybersecurity-filter')
+    // Add event listeners for other department submenu items
+
+    itFilter.addEventListener('click', () => {
+        filterUserCardsByDepartment('it');
+    });
+
+    cseFilter.addEventListener('click', () => {
+        filterUserCardsByDepartment('cse');
+    });
+
+    eceFilter.addEventListener('click', () => {
+        filterUserCardsByDepartment('ece');
+    });
+
+
+
+
+   
+
+    // Implement similar event listeners for other department submenu items
+
+    // Add event listeners for count submenu items
+    const greaterFilter = document.getElementById('greater-filter');
+    const shorterFilter = document.getElementById('shorter-filter');
+
+    greaterFilter.addEventListener('click', () => {
+        filterAndSortUserCardsByCount('Greater');
+    });
+
+    shorterFilter.addEventListener('click', () => {
+        filterAndSortUserCardsByCount('Shorter');
+    });
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const openLightboxButton = document.getElementById("export");
+    const lightbox = document.getElementById("lightbox");
+    const closeLightboxButton = document.getElementById("close-lightbox");
+
+    openLightboxButton.addEventListener("click", function () {
+        lightbox.style.display = "block";
+    });
+
+    closeLightboxButton.addEventListener("click", function () {
+        lightbox.style.display = "none";
+    });
+});
+
+</script>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.search-bar {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#search-input {
+    width: 60%;
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid #007bff; /* Blue underline */
+    font-size: 1rem;
+    outline: none;
+}
+
+/* Highlight filtered cards */
+.card.filtered {
+    border: 2px solid #007bff; /* Blue border for filtered cards */
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.card p {
+    margin: 5px 0;
+}
+
+.card-count {
+    font-weight: bold;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.year-section {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+    margin-top: 20px;
+    border-bottom: 2px solid #ccc;
+}
+
+.subsection {
+    margin-top: 10px;
+}
+
+.profile-image {
+    width: 100px; /* Set the desired width for the profile image */
+    height: 100px; /* Set the desired height for the profile image */
+    border-radius: 50%; /* Make it a circular image */
+    object-fit: cover; /* Ensure the image covers the entire container */
+    margin: 10px auto; /* Adjust margins as needed */
+    display: block; /* Ensure the image is a block element */
+    border: 2px solid #fff; /* Add a border if desired */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow if desired */
+}
+
+/* ... Your existing styles ... */
+
+/* Filter icon and options */
+/* Filter dropdown styles */
+.filter-bar {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.filter-dropdown {
+    display: inline-block;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #100f0f;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    position: relative;
+}
+
+.filter-dropdown:hover {
+    background-color: #0056b3;
+}
+
+.filter-options {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    width: max-content;
+    right: 0;
+}
+
+.filter-option {
+    position: relative;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-option:hover {
+  
+    background-color: #f2f2f2;
+}
+
+.filter-option:hover .submenu {
+    display: block;
+}
+
+/* Submenu styles */
+.submenu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    width: max-content;
+    left: 100%;
+    top: 0;
+}
+
+
+.submenu-item {
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.submenu-item:hover {
+    background-color: #040404;
+}
+
+/* Font Awesome icons */
+.filter-dropdown i,
+.filter-option i {
+    font-size: 18px;
+}
+
+/* Adjust the width and styling of the submenus as needed */
+
+
+
+/* Styles for the lightbox container */
+/* Styles for the lightbox container */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+
+.lightbox-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Styles for the brown text */
+.brown-text {
+    color: brown;
+}
+
+/* Styles for buttons and their container */
+.download-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.close-button {
+    margin-top: 20px;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 10px;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+
+/* Styles for the "Open Lightbox" button */
+/* Styles for the "Open Lightbox" button */
+#export {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    position: fixed;
+    bottom: 20px; /* Adjust as needed for vertical positioning */
+    right: 20px; /* Adjust as needed for horizontal positioning */
+    z-index: 1000; /* Adjust to ensure it's above other content */
+}
+
+
+
+@media screen and (max-width: 768px) {
+    #export {
+        bottom: 10px; /* Adjust for vertical positioning on mobile */
+        right: 10px; /* Adjust for horizontal positioning on mobile */
+    }
+}
+
+
+
+/* Responsive design for mobile devices */
+@media screen and (max-width: 600px) {
+    .lightbox-content {
+        max-width: 90%;
+    }
+}
+
+
+
+
+</style>
+
+
   <script src="../../../js/script.js"></script>
 </body>
   </html>
