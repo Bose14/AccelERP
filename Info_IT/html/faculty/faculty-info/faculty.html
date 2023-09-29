@@ -11,9 +11,11 @@
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"> </script>
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"> </script> 
   <script src="../../../js/database.js"> </script>  
+  <script src="../../../js/faculty.js"></script>
+  
     <title>Faculty Events</title>
 </head>
-<body>
+<body onload="fillfactable()">
 <header>
     <img src="../../../assests/img/header.png" height="10%" width="100%">
 </header>
@@ -64,20 +66,32 @@
               <th>Delete</th>
           </tr>
       </thead>
-      <tbody>
-          <tr>
+      <tbody id="tableBody">
+          <!-- <tr>
               <td>1</td>
               <td>Clark</td>
               <td>Kent</td>
               <td>clarkkent@mail.com</td>
               <td><a href="">Edit</a></td>
               <td><a href="">delete</a></td>
-          </tr>
+          </tr> -->
       </tbody>
       </table>
     </div>
   </div>
 
     
+
+  <div class="lightbox-wrapper" id="lightboxWrapper">
+    <div class="lightbox-container">
+      <h2>Delete</h2>
+      <p>Do you want to delete really?</p>
+      <div class="button-container">
+        <button class="button cancel" id="cancelButton">Cancel</button>
+        <button id="delconfirm" class="button delete">Delete</button>
+      </div>
+    </div>
+
+
 </body>
 </html>

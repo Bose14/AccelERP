@@ -877,6 +877,7 @@ function submitpublication(){
     // console.log(date)
     let certificatedate=  date1.replace(/-/g, "");
     var publication = document.getElementById("exampleFormControlFile1")
+    const randomId = generateUniqueRandomId(10);
 
 
     if(event=="" || org=="" || date1=="" || name=="")
@@ -925,6 +926,7 @@ function submitpublication(){
                   name:name,
                   date:date1,
                   publication:downloadURL,
+                  id: randomId
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
@@ -1306,6 +1308,8 @@ function copyid(formid){
 window.location.href = "/Info_IT/html/edit.html"   
 }
 
+
+
 function deleteForm(formid){
     lightboxWrapper = document.getElementById("lightboxWrapper");
     lightboxWrapper.style.display = 'flex';
@@ -1334,8 +1338,9 @@ function deleteForm(formid){
 
 
 
-
 //edit form
+
+
 
 function editform() {
     var searchId = localStorage.getItem("id");
@@ -1374,6 +1379,44 @@ function editform() {
       if (user) {
         const uid = user.uid;
         const path = `stucertify/${uid}`;
+  
+        const userRef = database.ref(path);
+        userRef.once('value', (snapshot) => {
+          snapshot.forEach((eventSnapshot) => {
+            eventSnapshot.forEach((dateSnapshot) => {
+              const eventData = dateSnapshot.val();
+              if (eventData.id === searchId) {
+                console.log(eventData.organization);
+                console.log('Found match:', eventData);
+                
+                // Delete the matched data
+                dateSnapshot.ref.remove()
+                  .then(() => {
+                    console.log('Data deleted successfully.');
+                    window.location.reload()
+                    // Perform any further actions or UI updates here
+                  })
+                  .catch((error) => {
+                    console.error('Error deleting data:', error);
+                  });
+              }
+            });
+          });
+        });
+      }
+    });
+  }
+  
+
+  function deletefacevents() {
+    console.log("delete initiated...!")
+    var searchId = localStorage.getItem("delid");
+    console.log(searchId);
+  
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const uid = user.uid;
+        const path = `facultycertify/${uid}`;
   
         const userRef = database.ref(path);
         userRef.once('value', (snapshot) => {
@@ -1474,6 +1517,8 @@ function editform() {
     });
 }
 
+
+
 // Add an event listener to the form
 document.getElementById('editForm').addEventListener('submit', (event) => {
     event.preventDefault();
@@ -1497,7 +1542,15 @@ function updateDataInFirebase(updatedData) {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
             const uid = user.uid;
-            const path = `stucertify/${uid}`;
+
+            var role= localStorage.getItem("role")
+            var path=""
+            if(role=="faculty"){
+                path=`facultycertify/${uid}`;
+            }
+            else{
+                path = `stucertify/${uid}`;
+            }
 
             const userRef = firebase.database().ref(path);
             userRef.once('value', (snapshot) => {
@@ -1514,6 +1567,51 @@ function updateDataInFirebase(updatedData) {
         }
     });
 }
+
+
+function fillfactable() {
+    const tableBody = document.getElementById("tableBody");
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const uid = user.uid;
+
+        // Function to retrieve and populate data
+        database.ref("facultycertify/" + uid).on("value", (snapshot) => {
+          tableBody.innerHTML = ""; // Clear the table before populating
+          var sno=1
+          snapshot.forEach((userSnapshot) => {
+            userSnapshot.forEach((eventSnapshot) => {
+                
+              const eventDetails = eventSnapshot.val();
+              const eventName = eventDetails.event;
+              const eventDate = eventDetails.date;
+              const organization = eventDetails.organization;
+              const formid = eventDetails.id;
+              console.log(formid)
+
+              const row = document.createElement("tr");
+              row.innerHTML = `
+              <td>${sno}</td>
+                <td>${eventName}</td>
+                <td>${organization}</td>
+                <td>${eventDate}</td>
+                <td><button onclick="copyfacid('${formid}')" class="btn">Edit</button></td>
+                <td><button onclick="deletefacForm('${formid}')" class="btn">Delete</button></td>
+              `;
+
+              tableBody.appendChild(row);
+              sno+=1
+            });
+          });
+        });
+      }
+    });
+  }
+
+
+
+
 
 // Call editform() to populate the form with data from Firebase
 
@@ -1632,6 +1730,7 @@ function filterUserCards() {
 
 function filterUserCardsByDepartment(department) {
     console.log("Selected filter is dept "+ department)
+    document.getElementById("filtered").innerHTML="Filtered by Department '"+department+"'"
     const cards = document.querySelectorAll('.card');
 
     cards.forEach((card) => {
@@ -1959,3 +2058,8 @@ async function downloadpdf() {
     const match = countText.match(/\d+/);
     return match ? parseInt(match[0]) : 0;
   }
+
+
+
+
+  
