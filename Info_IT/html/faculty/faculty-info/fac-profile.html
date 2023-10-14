@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Profile</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../../../css/style-profile.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+	<script src="https://kit.fontawesome.com/bb2bf5f24b.js" crossorigin="anonymous"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"> </script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"> </script> 
+  <script src="../../../js/database.js"> </script> 
+</head>
+<body onload="fillprofile()">
+	<header>
+		<img src="../../../assests/img/header.png" height="10%" width="100%">
+	</header>
+	<div>
+		<nav class="navbar navbar-light ">
+			<div class="container-fluid flex flex-row-reverse px-2">
+				<div >
+					<a href="../../../index.html" class="text-white text-decoration-none fw-semibold px-3">HOME</a>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<section class="py-5 my-5">
+		<div class="container">
+			<h1 class="mb-5">My Profile</h1>
+			<div class="bg-white shadow rounded-lg d-block d-sm-flex">
+				<div class="profile-tab-nav border-right">
+					<div class="p-4">
+                       
+						<div class="pl-4">
+							<form action="../../../js/database.js" method="post" enctype="multipart/form-data">
+                                <label for="profile-picture-input">
+                              <div class="profile-pic" id="profile-picture" style="background-image: url('../../../assests/img/user-prof.jpg')">
+                                  <span class="fa fa-camera"></span>
+                                  <span>Change Image</span>
+                              </div>
+                              </label>
+                              <input type="File" name="fileToUpload" id="profile-picture-input" onclick="profile()">
+                            </form>
+						</div>
+					</div>
+					<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+						<a class="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab" aria-controls="account" aria-selected="true">
+							<i class="fa fa-home text-center mr-1"></i> 
+							Account
+						</a>
+						<a class="nav-link" id="security-tab" data-toggle="pill" href="#resume" role="tab" aria-controls="security" aria-selected="false" >
+							<i class="fa-solid fa-file"></i>
+							Resume
+						</a>
+					</div>
+				</div>
+				<div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+					<div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+						<h3 class="mb-4">Account Settings</h3>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>Full Name</label>
+								  	<input type="text" class="form-control" id="fullname" readonly>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>Email</label>
+								  	<input type="text" class="form-control" id="email" readonly>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>Register Number</label>
+								  	<input type="text" class="form-control" id="regno" readonly>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>Date Of Birth</label>
+								  	<input type="text" class="form-control" id="dob" readonly>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>Gender</label>
+								  	<input type="text" class="form-control" id="gender" readonly>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>Phone number</label>
+								  	<input type="text" class="form-control" id="phone" readonly >
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>College</label>
+								  	<input type="text" class="form-control" id="college" readonly>
+								</div>
+							</div>
+                            <div class="col-md-6">
+								<div class="form-group">
+								  	<label>Degree/Branch</label>
+								  	<input type="text" class="form-control" id="degree" readonly>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+								  	<label>Designation</label>
+								  	<input type="text" class="form-control" id="desig" readonly>
+								</div>
+							</div>
+						</div>
+						<div>
+							<button class="btn text-white"><a href="../../../index.html" class="text-white">LOGOUT</a></button>
+						</div>
+					</div>
+					
+					<div class="tab-pane fade" id="resume" role="tabpanel" aria-labelledby="security-tab">
+						<form id="dropFileForm" action="http://localhost/upload.php" method="post" onsubmit="uploadFiles(event)">
+                            <input type="file" name="files[]" id="fileInput" multiple onchange="addFiles(event)">
+                          
+                            <label for="fileInput" id="fileLabel" ondragover="overrideDefault(event);fileHover();" ondragenter="overrideDefault(event);fileHover();" ondragleave="overrideDefault(event);fileHoverEnd();" ondrop="overrideDefault(event);fileHoverEnd();
+                                  addFiles(event);">
+                              <i class="fa fa-download fa-5x"></i>
+                              <br>
+                              <span id="fileLabelText">
+                                Choose a file or drag it here
+                              </span>
+                              <br>
+                              <span id="uploadStatus"></span>
+                            </label>
+                          
+                            <input type="submit" value="Upload" class="uploadButton">
+                          </form>
+
+							<div class="py-5">
+								<button class="btn text-white">Update</button>
+								<button class="btn text-white">Cancel</button>
+								
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+	<script>var dropFileForm = document.getElementById("dropFileForm");
+        var fileLabelText = document.getElementById("fileLabelText");
+        var uploadStatus = document.getElementById("uploadStatus");
+        var fileInput = document.getElementById("fileInput");
+        var droppedFiles;
+        
+        function overrideDefault(event) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        
+        function fileHover() {
+          dropFileForm.classList.add("fileHover");
+        }
+        
+        function fileHoverEnd() {
+          dropFileForm.classList.remove("fileHover");
+        }
+        
+        function addFiles(event) {
+          droppedFiles = event.target.files || event.dataTransfer.files;
+          showFiles(droppedFiles);
+        }
+        
+        function showFiles(files) {
+          if (files.length > 1) {
+            fileLabelText.innerText = files.length + " files selected";
+          } else {
+            fileLabelText.innerText = files[0].name;
+          }
+        }
+        
+        function uploadFiles(event) {
+          event.preventDefault();
+          changeStatus("Uploading...");
+        
+          var formData = new FormData();
+        
+          for (var i = 0, file; (file = droppedFiles[i]); i++) {
+            formData.append(fileInput.name, file, file.name);
+          }
+        
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function(data) {
+            //handle server response and change status of
+            //upload process via changeStatus(text)
+            console.log(xhr.response);
+          };
+          xhr.open(dropFileForm.method, dropFileForm.action, true);
+          xhr.send(formData);
+        }
+        
+        function changeStatus(text) {
+          uploadStatus.innerText = text;
+        }
+        </script>
+			
+</body>
+</html>

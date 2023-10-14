@@ -175,3 +175,82 @@ for (const date in eventDates) {
 
 
 }
+
+
+
+function displayFacultyData() {
+  const usersRef = database.ref('user'); // Change 'users' to your Firebase database path
+
+  usersRef.on('child_added', (snapshot) => {
+      const userId = snapshot.key;
+      const userData = snapshot.val();
+
+      // Check if the user's role is "student"
+      if (userData.role === 'faculty') {
+          const department = userData.department;
+
+          // Create or select the section element for the corresponding year
+          let deptSection = document.getElementById(`year-${department}-section`);
+          if (!deptSection) {
+              // If the section doesn't exist, create it
+              deptSection = document.createElement('div');
+
+
+              deptSection.id = `year-${department}-section`;
+              deptSection.className = 'year-section';
+              deptSection.innerHTML = `<h2>${department} Dept</h2>`;
+              document.getElementById('card-container').appendChild(deptSection);
+          }
+
+          createFacUserCard(userId, userData, deptSection);
+      }
+  });
+}
+
+function createFacUserCard(userId, userData, section) {
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  const userName = userData.name;
+  const department = userData.department;
+  const designation = userData.designation;
+  const email = userData.email;
+  const phone = userData.phone
+  const uid = userData.uid;
+  const count = userData.count;
+  //console.log("Card Created for "+userName+" and his/her userId is: "+uid)
+  
+  var profileImage = userData.profile;
+
+  if(profileImage=="undefined"|| profileImage==undefined|| profileImage=="null" || profileImage==null ||  profileImage==NaN){
+      profileImage = "https://firebasestorage.googleapis.com/v0/b/accelerp-2c3ce.appspot.com/o/image-removebg-preview%20(5).png?alt=media&token=b03c4c4f-4bd9-4ffb-b54b-b18bd97455fc"
+  }
+
+  card.innerHTML = `
+      <img src="${profileImage}" alt="${userName}'s Profile Image" class="profile-image">
+      <h2>${userName}</h2>
+      <h3>[ ${designation} ]</h3> <!-- Display registration number -->
+      <p>Department: ${department}</p>
+      <p>Email id: ${email}</p>
+      <strong>${phone}</strong>
+      <h6>Certification Count: <span class="card-count">${count}</span></h6>
+  `;
+
+  card.dataset.userId = uid;
+  card.dataset.profile = profileImage;
+  card.dataset.name = userName;
+  card.dataset.department = department;
+  card.dataset.designation = designation;
+  card.dataset.phone = phone;
+  card.dataset.email = email;
+ 
+  // Add a click event listener to the card
+  card.addEventListener('click', () => {
+      // Copy the user's UID to localStorage
+      localStorage.setItem('selectedUserId', userId);
+      window.location.href="events-stu-rec.html";
+  });
+
+  section.appendChild(card);
+}
+

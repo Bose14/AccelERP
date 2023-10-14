@@ -26,6 +26,37 @@
         <script src=""></script>
         <link rel="stylesheet" href="../../../css/style.css">
 
+        <style>
+            /* Additional CSS to position year-submenu items */
+                .year-submenu {
+                    position: absolute;
+                    top: 0;
+                    left: 100%;
+                    display: none;
+                    background-color: white;
+                    width: 100px;
+                    border-left:solid 1px black ;
+                }
+
+                .year-submenu .submenu-item {
+                    display: block;
+                    margin-top: 10px; /* Adjust the margin as needed for spacing */
+                }
+
+        </style>
+        <script>
+            function showContent() {
+                console.log("Working");
+                const yearSubmenu = document.getElementById("year-submenu");
+                
+                // Toggle the visibility of the year-submenu
+                if (yearSubmenu.style.display === "none" || yearSubmenu.style.display === "") {
+                  yearSubmenu.style.display = "block";
+                } else {
+                  yearSubmenu.style.display = "none";
+                }
+            }
+        </script>
     </head>
 
 <body onload="displayUserData()">
@@ -69,45 +100,64 @@
                   <div class="submenu-item" id="bme-filter">BME</div>
                   <div class="submenu-item" id="cybersecurity-filter">Cybersecurity</div>
               </div>
+              
           </div>
           <div class="filter-option" id="dept-year-filter">
               <i class="fas fa-calendar-alt"></i> Department & Year
               <div class="submenu" id="dept-year-submenu">
                   <!-- Add submenu items for departments and years here -->
-                  <div class="submenu-item" id="it-1">IT-1st year</div>
-                  <div class="submenu-item" id="it-2">IT-2nd year</div>
-                  <div class="submenu-item" id="it-3">IT-3rd year</div>
-                  <div class="submenu-item" id="it-4">IT-4th year</div>
+                    <div class="submenu-item" id="it-filter" onmouseover="showContent();">
+                        IT
+                    </div>
 
-                  <div class="submenu-item" id="cse-1">CSE-1st year</div>
-                  <div class="submenu-item" id="cse-2">CSE-2nd year</div>
-                  <div class="submenu-item" id="cse-3">CSE-3rd year</div>
-                  <div class="submenu-item" id="cse-4">CSE-4th year</div>
-
-                  <div class="submenu-item" id="ece-1">ECE-1st year</div>
-                  <div class="submenu-item" id="ece-2">ECE-2nd year</div>
-                  <div class="submenu-item" id="ece-3">ECE-3rd year</div>
-                  <div class="submenu-item" id="ece-4">ECE-4th year</div>
-
-                  <div class="submenu-item" id="eee-1">EEE-1st year</div>
-                  <div class="submenu-item" id="eee-2">EEE-2nd year</div>
-                  <div class="submenu-item" id="eee-3">EEE-3rd year</div>
-                  <div class="submenu-item" id="eee-4">EEE-4th year</div>
-
-                  <div class="submenu-item" id="bme-1">BME-1st year</div>
-                  <div class="submenu-item" id="bme-2">BME-2nd year</div>
-                  <div class="submenu-item" id="bme-3">BME-3rd year</div>
-                  <div class="submenu-item" id="bme-4">BME-4th year</div>
-
-                  <div class="submenu-item" id="mech-1">MECH-1st year</div>
-                  <div class="submenu-item" id="mech-2">MECH-2nd year</div>
-                  <div class="submenu-item" id="mech-3">MECH-3rd year</div>
-                  <div class="submenu-item" id="mech-4">MECH-4th year</div>
-
-                  <div class="submenu-item" id="cyber-1">Cyber-1st year</div>
-                  <div class="submenu-item" id="cyber-2">Cyber-2nd year</div>
-                  <div class="submenu-item" id="cyber-3">Cyber-3rd year</div>
-                  <div class="submenu-item" id="cyber-4">Cyber-4th year</div>
+                    <div id="year-submenu" class="year-submenu" style="display:none;">
+                        <div class="submenu-item">1st Year</div>
+                        <div class="submenu-item">2nd Year</div>
+                        <div class="submenu-item">3rd Year</div>
+                        <div class="submenu-item">4th Year</div>
+                    </div>
+                  <div class="submenu-item" id="cse-filter">CSE</div>
+                  <div id="year-submenu" class="year-submenu" style="display:none;">
+                    <div class="submenu-item">1st Year</div>
+                    <div class="submenu-item">2nd Year</div>
+                    <div class="submenu-item">3rd Year</div>
+                    <div class="submenu-item">4th Year</div>
+                </div>
+                  <div class="submenu-item" id="ece-filter">ECE</div>
+                  <div id="year-submenu" class="year-submenu" style="display:none;">
+                    <div class="submenu-item">1st Year</div>
+                    <div class="submenu-item">2nd Year</div>
+                    <div class="submenu-item">3rd Year</div>
+                    <div class="submenu-item">4th Year</div>
+                </div>
+                  <div class="submenu-item" id="eee-filter">EEE</div>
+                  <div id="year-submenu" class="year-submenu" style="display:none;">
+                    <div class="submenu-item">1st Year</div>
+                    <div class="submenu-item">2nd Year</div>
+                    <div class="submenu-item">3rd Year</div>
+                    <div class="submenu-item">4th Year</div>
+                </div>
+                  <div class="submenu-item" id="mech-filter">Mech</div>
+                  <div id="year-submenu" class="year-submenu" style="display:none;">
+                    <div class="submenu-item">1st Year</div>
+                    <div class="submenu-item">2nd Year</div>
+                    <div class="submenu-item">3rd Year</div>
+                    <div class="submenu-item">4th Year</div>
+                </div>
+                  <div class="submenu-item" id="bme-filter">BME</div>
+                  <div id="year-submenu" class="year-submenu" style="display:none;">
+                    <div class="submenu-item">1st Year</div>
+                    <div class="submenu-item">2nd Year</div>
+                    <div class="submenu-item">3rd Year</div>
+                    <div class="submenu-item">4th Year</div>
+                </div>
+                  <div class="submenu-item" id="cybersecurity-filter">Cybersecurity</div>
+                  <div id="year-submenu" class="year-submenu" style="display:none;">
+                    <div class="submenu-item">1st Year</div>
+                    <div class="submenu-item">2nd Year</div>
+                    <div class="submenu-item">3rd Year</div>
+                    <div class="submenu-item">4th Year</div>
+                </div>
               </div>
           </div>
           <div class="filter-option" id="count-filter">
@@ -292,7 +342,31 @@ countFilter.addEventListener('click', () => {
     });
 });
 
+
+    // JavaScript to toggle the visibility of the year submenu when the IT div is clicked
+    const ityearFilter = document.getElementById("it-filter");
+  const yearSubmenu = document.querySelector(".year-submenu");
+
+  ityearFilter.addEventListener("hover", function () {
+    if (yearSubmenu.style.display === "none" || yearSubmenu.style.display === "") {
+      yearSubmenu.style.display = "block";
+    } else {
+      yearSubmenu.style.display = "none";
+    }
+  });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
 
 <style>
   body {
