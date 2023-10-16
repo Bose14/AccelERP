@@ -396,7 +396,8 @@ function submitworkshop(){
     var enddate = document.getElementById("exampleDate2").value;
    
     var mode = document.getElementById("exampleMode").value;
-    var certificate = document.getElementById("exampleFormControlFile1")
+    var certificate = document.getElementById("exampleFormControlFile1");
+    const randomId = generateUniqueRandomId(10);
 
 
     if(event=="" || org=="" || date1=="" || topic=="" || duration=="" || enddate=="" || mode=="")
@@ -448,6 +449,7 @@ function submitworkshop(){
                   topic: topic,
                   mode:mode,
                   certificate:downloadURL,
+                  id:randomId
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
@@ -478,7 +480,8 @@ function submitextracourses(){
     let certificatedate=  date1.replace(/-/g, "");
    
     var mode = document.getElementById("exampleMode").value;
-    var certificate = document.getElementById("exampleFormControlFile1")
+    var certificate = document.getElementById("exampleFormControlFile1");
+    const randomId = generateUniqueRandomId(10);
 
 
     if(event=="" || org=="" || date1=="" || coursename=="" || duration=="" ||  mode=="")
@@ -529,6 +532,7 @@ function submitextracourses(){
                   date: date1,
                   mode:mode,
                   certificate:downloadURL,
+                  id:randomId
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
@@ -559,7 +563,8 @@ function submitppt(){
     let certificatedate=  date1.replace(/-/g, "");
    
     var mode = document.getElementById("exampleMode").value;
-    var certificate = document.getElementById("exampleFormControlFile1")
+    var certificate = document.getElementById("exampleFormControlFile1");
+    const randomId = generateUniqueRandomId(10);
 
 
     if(event=="" || org=="" || date1=="" || topic=="" || mode=="")
@@ -609,6 +614,7 @@ function submitppt(){
                   date:date1,
                   mode:mode,
                   certificate:downloadURL,
+                  id:randomId
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
@@ -639,7 +645,8 @@ function submitproject(){
     var date1 = document.getElementById("exampleDate").value;
     // console.log(date)
     let certificatedate=  date1.replace(/-/g, "");
-    var certificate = document.getElementById("exampleFormControlFile1")
+    var certificate = document.getElementById("exampleFormControlFile1");
+    const randomId = generateUniqueRandomId(10);
 
 
     if(event=="" || title=="" || date1=="" || duration=="" || status=="")
@@ -690,6 +697,7 @@ function submitproject(){
                   link:link,
                   date:date1,
                   certificate:downloadURL,
+                  id:randomId
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
@@ -720,7 +728,8 @@ function submitother(){
     let startdate=  date1.replace(/-/g, "");
     var domain = document.getElementById("exampleDomain").value;
     var mode = document.getElementById("exampleMode").value;
-    var certificate = document.getElementById("exampleFormControlFile1")
+    var certificate = document.getElementById("exampleFormControlFile1");
+    const randomId = generateUniqueRandomId(10);
 
 
     if(event=="" || org=="" || date1=="" || domain=="" || duration=="" || mode=="")
@@ -770,7 +779,8 @@ function submitother(){
                   date: date1,
                   domain: domain,
                   mode:mode,
-                  certificate:downloadURL
+                  certificate:downloadURL,
+                  id:randomId
                 })
                 alert("File uploaded successfully and URL saved to database!");
                 window.location.href="/Info_IT/html/student/student-info/student.html"
@@ -804,7 +814,8 @@ function submitfdp(){
     var enddate = document.getElementById("exampleDate2").value;
    
     var mode = document.getElementById("exampleMode").value;
-    var certificate = document.getElementById("exampleFormControlFile1")
+    var certificate = document.getElementById("exampleFormControlFile1");
+    const randomId = generateUniqueRandomId(10);
 
 
     if(event=="" || org=="" || date1=="" || domain=="" || duration=="" || enddate=="" || mode=="")
@@ -856,6 +867,7 @@ function submitfdp(){
                   domain: domain,
                   mode:mode,
                   certificate:downloadURL,
+                  id:randomId
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
@@ -1018,6 +1030,7 @@ function submitfacworkshop(){
                   topic: topic,
                   mode:mode,
                   certificate:downloadURL,
+                  id:randomId
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
@@ -1097,6 +1110,7 @@ function submitjournal(){
                   topic:topic,
                   date:date1,
                   certificate:downloadURL,
+                  id:randomId
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
@@ -1179,6 +1193,7 @@ function submitfacproject(){
                     link:link,
                     date:date1,
                     certificate:downloadURL,
+                    id:randomId
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
@@ -1259,7 +1274,8 @@ function submitfacother(){
                   date: date1,
                   domain: domain,
                   mode:mode,
-                  certificate:downloadURL
+                  certificate:downloadURL,
+                  id:randomId
                 })
                 alert("File uploaded successfully and URL saved to database!");
                 window.location.href="/Info_IT/html/faculty/faculty-info/faculty.html"
@@ -1438,7 +1454,7 @@ function editform() {
                 console.log(eventData.organization);
                 console.log('Found match:', eventData);
                 
-                // Delete the matched data
+                // Delete the matched dat2222a
                 dateSnapshot.ref.remove()
                   .then(() => {
                     console.log('Data deleted successfully.');
@@ -2074,3 +2090,296 @@ async function downloadpdf() {
 
 
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //faculty export
+  function downloadfac(){
+
+    document.getElementById("download-button").innerHTML="Downloading...!"
+    // Get the filtered cards
+    const filteredCards = getFilteredCards1();
+
+    // Create a new workbook
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Filtered Users');
+
+    // Define column headers
+    worksheet.addRow(['Name', 'Year & Semester', 'Certification Count']);
+
+    // Extract and format the data from filtered cards
+    filteredCards.forEach((card) => {
+        const name = card.querySelector('h2').textContent;
+        const yearSemester = card.querySelector('h3').textContent;
+        const count = extractCertificationCount(card);
+        worksheet.addRow([name, yearSemester, count]);
+    });
+
+    // Generate the Excel file as a blob
+    workbook.xlsx.writeBuffer().then((data) => {
+        const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+        // Create a download link and trigger the download
+        const downloadLink = document.createElement('a');
+        const fileName = 'filtered_users.xlsx';
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = fileName;
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    });
+}
+
+// Function to get the filtered cards
+function getFilteredCards1() {
+    const cards = document.querySelectorAll('.card');
+    const filteredCards = [];
+
+    // Add logic here to filter the cards (based on department, year, count, etc.)
+    // For now, let's assume all cards are filtered and return them all
+    cards.forEach((card) => {
+        if (card.style.display !== 'none') {
+            filteredCards.push(card);
+        }
+    });
+
+    return filteredCards;
+}
+
+
+
+
+async function downloadfacpdf() {
+
+    document.getElementById("download-pdf-button").innerHTML="Downloading...!"
+    // Get the filtered cards (already displayed)
+    const filteredCards = getFilteredCards();
+
+    // Define a content array for pdfmake
+    const pdfContent = [];
+
+    // Define a style for keys (brown color and capitalize first letter)
+    const keyStyle = {
+        color: 'brown',
+        bold: true,
+        margin: [0, 5, 0, 0], // Adjust margin as needed
+        decoration: 'underline', // Underline the keys
+    };
+
+    // Iterate over the filtered cards
+    for (const card of filteredCards) {
+        try {
+            // Extract user details from each card (adjust as per your HTML structure)
+            const name = card.dataset.name;
+            const branch = card.dataset.branch;
+            const year = card.dataset.year;
+            const semester = card.dataset.semester;
+            const regno = card.dataset.regno;
+            const uid = card.dataset.userId;
+            console.log(name+" "+uid)
+
+            // Define user card content with the profile image
+            const userCardContent = [
+                {
+                    stack: [
+                        {
+                            text: 'User Details',
+                            style: 'header',
+                        },
+                        {
+                            text: `Name: ${name}`,
+                        },
+                        {
+                            text: `Branch: ${branch}`,
+                        },
+                        {
+                            text: `Year: ${year}`,
+                        },
+                        {
+                            text: `Semester: ${semester}`,
+                        },
+                        {
+                            text: `Reg No: ${regno}`,
+                        },
+                    ],
+                    alignment: 'left', // Align the user card to the left
+                    margin: [0, 0, 0, 10], // Adjust margins as needed
+                },
+            ];
+
+            // Retrieve additional info for the user from 'stucertify'
+            const userStucertifySnapshot = await firebase.database().ref(`facultycertify/${uid}`).once('value');
+
+           
+            const userStucertifyData = userStucertifySnapshot.val();
+
+
+            if(userStucertifyData==null||userStucertifyData==undefined||userStucertifyData=="undefined"){
+                pdfContent.push(userCardContent);
+            
+            }
+
+            else{
+
+            // Group additional information by date
+            const additionalInfoByDate = {};
+
+            // Iterate over 'eventname' keys
+            for (const eventName in userStucertifyData) {
+                if (userStucertifyData.hasOwnProperty(eventName)) {
+                    // Get 'eventname' data
+                    const eventnameData = userStucertifyData[eventName];
+
+                    // Iterate over 'date' keys
+                    for (const date in eventnameData) {
+                        if (eventnameData.hasOwnProperty(date)) {
+                            if (!additionalInfoByDate[date]) {
+                                additionalInfoByDate[date] = [];
+                            }
+
+                            // Iterate over the keys in dateData and add them to the group
+                            for (const key in eventnameData[date]) {
+                                if (eventnameData[date].hasOwnProperty(key)) {
+                                    additionalInfoByDate[date].push({
+                                        key: key.charAt(0).toUpperCase() + key.slice(1), // Capitalize first letter
+                                        value: eventnameData[date][key],
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Iterate over the grouped additional information and create tables
+            for (const date in additionalInfoByDate) {
+                if (additionalInfoByDate.hasOwnProperty(date)) {
+                    const dateData = additionalInfoByDate[date];
+
+                    // Sort the data by key with the desired order
+                    dateData.sort((a, b) => {
+                        const keyOrder = {
+                            Event: 0,
+                            Date: 1,
+                            Certificate: 2,
+                        };
+
+                        const keyA = a.key.toLowerCase();
+                        const keyB = b.key.toLowerCase();
+
+                        return keyOrder[keyA] - keyOrder[keyB];
+                    });
+
+                    // Create a table for additional info for each date
+                    const additionalInfoTable = {
+                        table: {
+                            headerRows: 1,
+                            widths: ['auto', '*'], // Adjust column widths as needed
+                            body: [
+                                // Header row
+                                [{ text: 'Fields', style: keyStyle }, { text: 'Data', style: keyStyle }],
+                            ],
+                        },
+                        layout: {
+                            hLineWidth: function (i, node) {
+                                return (i === 0) ? 1 : 0; // Add line for the header row only
+                            },
+                            hLineColor: function (i, node) {
+                                return 'gray'; // Color of horizontal lines
+                            },
+                        },
+                    };
+
+                    // Add rows to the additional info table
+                    for (const info of dateData) {
+                        if (info.key === 'certificate' || info.key === 'Certificate') {
+                            additionalInfoTable.table.body.push([{ text: info.key, link: info.value, bold: false}, {text: 'click here', link: info.value, color: 'blue'}]);
+                        } else if (info.key === 'event' || info.key === 'Event') {
+                            additionalInfoTable.table.body.push([{ text: info.key, bold: true, color: 'red', fontSize: 14 }, {text:info.value,bold: true, color:'red',fontSize: 14 }]);
+                        } else {
+                            additionalInfoTable.table.body.push([info.key, info.value]);
+                        }
+                    }
+
+                    // Push the user card content followed by the additional info table to pdfContent
+                    pdfContent.push(userCardContent, additionalInfoTable);
+                }
+            }
+            }
+        } catch (error) {
+            console.error('Error retrieving stucertify data from Firebase:', error);
+            document.getElementById("download-pdf-button").innerHTML="Error Occured! Contact Admin support."
+        }
+    
+    }//closing filtered cards iteration forloop
+
+    // Define the PDF document definition using pdfmake
+    const documentDefinition = {
+        content: pdfContent,
+        styles: {
+            header: {
+                fontSize: 16,
+                bold: true,
+                margin: [0, 10, 0, 5],
+            },
+        },
+    };
+
+    // Generate the PDF using pdfmake
+    pdfMake.createPdf(documentDefinition).download('filtered_users.pdf');
+}
+
+
+function uploadresume(){
+    const fileInput = document.getElementById('resume');
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert('Please select a file.');
+    return;
+  }
+
+  if (file.size > 3 * 1024 * 1024) {
+    alert('File size exceeds the limit of 3MB.');
+    return;
+  }
+
+  const fileName = file.name;
+  const uploadTask = storageRef.child(`resumes/${fileName}`).put(file);
+
+  uploadTask.on(
+    'state_changed',
+    (snapshot) => {
+      // Show upload progress (optional)
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      document.getElementById('status').textContent = `Uploading: ${Math.round(progress)}%`;
+    },
+    (error) => {
+      console.error('Upload error:', error);
+      document.getElementById('status').textContent = 'Upload failed.';
+    },
+    () => {
+      // Upload completed, now get the download URL and save it to the database
+      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        // Save the download URL in Firebase Realtime Database
+        databaseRef.child('resumes').push({ fileName, downloadURL });
+
+        // Reset form and status
+        fileInput.value = '';
+        document.getElementById('status').textContent = 'Upload complete.';
+      });
+    }
+  );
+}

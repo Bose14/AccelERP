@@ -191,7 +191,9 @@
                               <span id="uploadStatus"></span>
                             </label>
                           
-                            <input type="submit" value="Upload" class="uploadButton">
+                            <input id="resume" type="file"  class="uploadButton" accept=".pdf, .doc, .docx">
+							<input type="button" onclick="uploadresume()" value="Upload" class="uploadButton">
+  							<p id="status"></p>
                           </form>
 
 							<div class="py-5">
