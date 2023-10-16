@@ -76,6 +76,7 @@
                     <label for="password" class="block text-base mb-2">Password</label>
                     <input type="password" id="password" class="border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 rounded" placeholder="Enter Password..." />
                 </div>
+                <p id="errorlogin" style="color: red;"></p>
                 <div class="mt-3 flex justify-between items-center">
                     <div>
                         <input type="checkbox" id="showPassword">
@@ -91,6 +92,83 @@
             </div>
         </div>
 </div>
+
+
+<div id="lightbox12" class="lightbox">
+    <div class="lightbox-content">
+        <span class="lightbox-close" onclick="closeLightbox1()">&times;</span>
+        
+        <div class="lightbox-title">Error<i class="fa fa-exclamation" aria-hidden="true"></i></div>
+        <p id="errormsg1" class="lightbox-paragraph">You are not a Student!</p>
+        <button id="errorbtn1" class="lightbox-button" onclick="continueAsFaculty()">Continue as faculty</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById("lightbox12").style.visibility="hidden"
+    function closeLightbox1(){
+        document.getElementById("lightbox12").style.visibility="hidden";
+    }
+
+    function continueAsFaculty(){
+        window.location.replace("../faculty/faculty-login.html")
+    }
+</script>
+
+<style>
+    .lightbox12{
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1;
+    }
+
+    /* Lightbox content */
+    .lightbox-content {
+        background-color: #fff;
+        border-radius: 5px;
+        width: 300px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        text-align: center;
+    }
+
+    /* Close button */
+    .lightbox-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    /* Title and content */
+    .lightbox-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .lightbox-paragraph {
+        font-size: 18px;
+    }
+
+    /* Button style */
+    .lightbox-button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+</style>
 <script src="../../js/script.js"></script>
 </body>
 </html>

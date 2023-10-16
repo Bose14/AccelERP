@@ -108,7 +108,8 @@ const firebaseConfig = {
                 
             }
             else{
-                alert("You are not a student");
+                document.getElementById("lightbox12").style.visibility="visible";
+                //alert("You are not a student");
             }
         })
     
@@ -117,7 +118,8 @@ const firebaseConfig = {
        
     })
     .catch((error)=>{
-        alert("Login failed!")
+        document.getElementById("errorlogin").innerHTML=error.message;
+        //alert("Login failed!")
     })
 
 }
@@ -140,13 +142,16 @@ function faclogin(){
                 window.location.href="faculty-info/faculty.html"
             }
             else{
-                alert("You are not a faculty");
+                document.getElementById("lightbox11").style.visibility="visible";
+                //alert("You are not a faculty");
             }
         })
     
-    .catch((error)=>{
-        alert("Login failed!")
+   
     })
+    .catch((error)=>{
+       document.getElementById("errorlogin").innerHTML=error.message;
+
 
 })
 }
@@ -169,12 +174,14 @@ function adlogin(){
                 window.location.href="admin-info/admin-info.html"
             }
             else{
-                alert("You are not an Admin");
+                document.getElementById("lightbox13").style.visibility="visible";
+                //alert("You are not an Admin");
             }
         })
     
     .catch((error)=>{
-        alert("Login failed!")
+        document.getElementById("errorlogin").innerHTML=error.message;
+        //alert("Login failed!")
     })
 
 })
@@ -956,6 +963,7 @@ function submitfacworkshop(){
     // console.log(date)
     let startdate=  date1.replace(/-/g, "");
     var enddate = document.getElementById("exampleDate2").value;
+    const randomId = generateUniqueRandomId(10);
    
     var mode = document.getElementById("exampleMode").value;
     var certificate = document.getElementById("exampleFormControlFile1")
@@ -1038,6 +1046,7 @@ function submitjournal(){
     var date1 = document.getElementById("exampleDate").value;
     // console.log(date)
     let certificatedate=  date1.replace(/-/g, "");
+    const randomId = generateUniqueRandomId(10);
    
     var certificate = document.getElementById("exampleFormControlFile1")
 
@@ -1118,6 +1127,7 @@ function submitfacproject(){
     var date1 = document.getElementById("exampleDate").value;
     // console.log(date)
     let certificatedate=  date1.replace(/-/g, "");
+    const randomId = generateUniqueRandomId(10);
     var certificate = document.getElementById("exampleFormControlFile1")
 
 
@@ -1199,6 +1209,7 @@ function submitfacother(){
     var domain = document.getElementById("exampleDomain").value;
     var mode = document.getElementById("exampleMode").value;
     var certificate = document.getElementById("exampleFormControlFile1")
+    const randomId = generateUniqueRandomId(10);
 
 
     if(event=="" || org=="" || date1=="" || domain=="" || duration=="" || mode=="")
