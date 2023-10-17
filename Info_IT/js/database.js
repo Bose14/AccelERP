@@ -26,6 +26,17 @@ const firebaseConfig = {
     }
 })
 
+//signout
+function logout(){
+    auth.signOut().then(function() {
+        window.location.href="index.html"
+        console.log("User signed out");
+      }).catch(function(error) {
+        // An error occurred.
+        alert(error.message);
+      });
+}
+
 
   function fillprofile(){
     //Profile Information
@@ -101,10 +112,18 @@ const firebaseConfig = {
             var name=snapshot.val().name;
             var role=snapshot.val().role;
             //var mobile=snapshot.val().mobile;
+            var profile = snapshot.val().profile;
 
             if(role=="student"){
-                alert("Yes")
-                window.location.href="student-info/student.html"
+                //alert("Yes")
+                document.getElementById("lightboxlogin").style.visibility="visible"
+
+                document.getElementById("profile-photo").src=profile;
+                document.getElementById("nameoflogin").innerHTML=name;
+                setTimeout(() => {
+                    window.location.href="student-info/student.html"
+                }, 4000);
+               
                 
             }
             else{
@@ -137,9 +156,19 @@ function faclogin(){
             var name=snapshot.val().name;
             var role=snapshot.val().role;
             //var mobile=snapshot.val().mobile;
+            var profile = snapshot.val().profile;
+            console.log(profile)
 
             if(role=="faculty"){
-                window.location.href="faculty-info/faculty.html"
+                //console.log(document.getElementById("lightboxlogin").style.visibility)
+                document.getElementById("lightboxlogin").style.visibility="visible"
+
+                document.getElementById("profile-photo").src=profile;
+                document.getElementById("nameoflogin").innerHTML=name;
+                setTimeout(() => {
+                    window.location.href="faculty-info/faculty.html"
+                }, 4000);
+               
             }
             else{
                 document.getElementById("lightbox11").style.visibility="visible";
@@ -2343,8 +2372,10 @@ async function downloadfacpdf() {
 
 
 function uploadresume(){
-    const fileInput = document.getElementById('resume');
+    const fileInput = document.getElementById('resume1');
   const file = fileInput.files[0];
+  const storageRef = storage.ref();
+ 
 
   if (!file) {
     alert('Please select a file.');
@@ -2374,12 +2405,48 @@ function uploadresume(){
       // Upload completed, now get the download URL and save it to the database
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
         // Save the download URL in Firebase Realtime Database
-        databaseRef.child('resumes').push({ fileName, downloadURL });
+        const newUserRef = database.ref("user/"+global_uid+"/")
+        newUserRef.update({
+          resume: downloadURL,
+        })
+        
+        
 
         // Reset form and status
         fileInput.value = '';
         document.getElementById('status').textContent = 'Upload complete.';
+        
       });
     }
   );
+}
+
+
+function checkresume(){
+    const pdfFrame = document.getElementById("pdf-frame");
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+           var uid = user.uid;
+
+           firebase.database().ref('user/'+uid).once('value').then(function(snapshot){
+            let resume=snapshot.val().resume;
+
+            if(resume==""||resume==undefined||resume=="undefined"||resume==null){
+                document.getElementById("resumecontainer").style.visibility="hidden"
+                pdfFrame.style.visibility="hidden"
+            }
+            else{
+
+                document.getElementById("uploadingresumecontainer").style.visibility="hidden";
+                pdfFrame.style.visibility="visible"
+                const pdfUrl = resume;
+                pdfFrame.src = pdfUrl;
+            }
+      
+
+
+
+})
+}
+})
 }

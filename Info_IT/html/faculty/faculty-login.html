@@ -108,7 +108,19 @@
     </div>
 </div>
 
+<!-- for loading -->
+<div id="lightboxlogin" class="lightbox">
+    <div class="lightbox-content">
+        <img src="../../assests/img/user-prof.jpg" class="profile-photo" id="profile-photo">
+        <br>
+        <span class="lightbox-title" id="nameoflogin"></span>
+        <p class="loading-text" id="loading-text">Loading your account...</p>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </div>
+</div>
+
 <script>
+    document.getElementById("lightboxlogin").style.visibility="hidden"
     document.getElementById("lightbox11").style.visibility="hidden"
     function closeLightbox1(){
         document.getElementById("lightbox11").style.visibility="hidden";
@@ -120,6 +132,40 @@
 </script>
 
 <style>
+
+
+
+        /* Styles for the loading animation */
+        .loading-text {
+            font-size: 18px;
+            animation: colorChange 1s infinite;
+            
+        }
+        @keyframes colorChange {
+            0% { color: #91d80d; }
+            50% { color: #FF5733; }
+            100% { color: #10f01f; }
+        }
+
+        /* Styles for the profile photo */
+        .profile-photo {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 50%;
+
+        }
+
+        /* Styles for the "Logout" button */
+        .logout-button {
+            margin-top: 20px;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+
     .lightbox11 {
         display: none;
         position: fixed;
@@ -127,7 +173,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.7);
+        background: rgba(0, 0, 0, 0.8);
         z-index: 1;
     }
 

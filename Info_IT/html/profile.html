@@ -58,6 +58,13 @@
 						</a>
 					</div>
 				</div>
+
+				<script>
+					document.getElementById("security-tab").addEventListener("click",function(){
+						checkresume();
+					})
+				</script>
+
 				<div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
 					<div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
 						<h3 class="mb-4">Account Settings</h3>
@@ -177,38 +184,140 @@
 					</div>
 					
 					<div class="tab-pane fade" id="resume" role="tabpanel" aria-labelledby="security-tab">
-						<form id="dropFileForm" action="http://localhost/upload.php" method="post" onsubmit="uploadFiles(event)">
-                            <input type="file" name="files[]" id="fileInput" multiple onchange="addFiles(event)">
-                          
-                            <label for="fileInput" id="fileLabel" ondragover="overrideDefault(event);fileHover();" ondragenter="overrideDefault(event);fileHover();" ondragleave="overrideDefault(event);fileHoverEnd();" ondrop="overrideDefault(event);fileHoverEnd();
-                                  addFiles(event);">
-                              <i class="fa fa-download fa-5x"></i>
-                              <br>
-                              <span id="fileLabelText">
-                                Choose a file or drag it here
-                              </span>
-                              <br>
-                              <span id="uploadStatus"></span>
-                            </label>
-                          
-                            <input id="resume" type="file"  class="uploadButton" accept=".pdf, .doc, .docx">
+						
+						<div id="uploadingresumecontainer" class="upload-container">
+							<label for="resume1" class="upload-label">Select File</label>
+							<input id="resume1" type="file" accept=".pdf">
 							<input type="button" onclick="uploadresume()" value="Upload" class="uploadButton">
-  							<p id="status"></p>
+							<p id="status"></p>
+						  </div>
+						  
                           </form>
 
-							<div class="py-5">
-								<button class="btn text-white">Update</button>
-								<button class="btn text-white">Cancel</button>
-								
+						  <div id="resumecontainer" class="pdf-container">
+    
+							<div class="pdf-viewer">
+								<iframe id="pdf-frame" src=""></iframe>
 							</div>
+						</div>
+							
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+
 	
 
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	
+<style>
+/*pdf viewer */
+.pdf-container {
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+}
+
+.pdf-controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.pdf-controls label {
+    font-weight: bold;
+}
+
+.pdf-controls input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.pdf-controls button {
+    background-color: #0074d9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pdf-controls button:hover {
+    background-color: #0056b3;
+}
+
+.pdf-viewer {
+    text-align: center;
+}
+
+iframe {
+    width: 100%;
+    height: 600px;
+}
+
+
+
+
+	/* Style the container for the file input and button */
+.upload-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+  }
+  
+  /* Style the file input label to look like a button */
+  .upload-label {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #007BFF; /* Blue color for the button */
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	border-radius: 5px;
+	margin-bottom: 10px;
+  }
+  
+  .upload-label:hover {
+	background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Style the file input itself (hidden) */
+  #resume1 {
+	display: none;
+  }
+  
+  /* Style the upload button */
+  .uploadButton {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #007BFF; /* Blue color for the button */
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	border-radius: 5px;
+  }
+  
+  .uploadButton:hover {
+	background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Style the status text */
+  #status {
+	font-size: 18px;
+	color: #333;
+	text-align: center;
+  }
+  
+</style>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></scrip>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
