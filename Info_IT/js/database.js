@@ -482,7 +482,7 @@ function submitworkshop(){
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
-                window.location.href="../html/student/student-info/student.html"
+                window.location.href="/html/student/student-info/student.html"
             }
         );
         }
@@ -565,7 +565,7 @@ function submitextracourses(){
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
-                window.location.href="../html/student/student-info/student.html"
+                window.location.href="/html/student/student-info/student.html"
             }
         );
         }
@@ -647,7 +647,7 @@ function submitppt(){
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
-                window.location.href="../html/student/student-info/student.html"
+                window.location.href="/html/student/student-info/student.html"
             }
         );
         }
@@ -730,7 +730,7 @@ function submitproject(){
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
-                window.location.href="../html/student/student-info/student.html"
+                window.location.href="/html/student/student-info/student.html"
             }
         );
         }
@@ -812,7 +812,7 @@ function submitother(){
                   id:randomId
                 })
                 alert("File uploaded successfully and URL saved to database!");
-                window.location.href="../html/student/student-info/student.html"
+                window.location.href="/html/student/student-info/student.html"
             }
         );
         }
@@ -900,7 +900,7 @@ function submitfdp(){
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
-                window.location.href="/Info_IT/html/faculty/faculty-info/faculty.html"
+                window.location.href="/html/faculty/faculty-info/faculty.html"
             }
         );
         }
@@ -978,7 +978,7 @@ function submitpublication(){
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
-                window.location.href="/Info_IT/html/faculty/faculty-info/faculty.html"
+                window.location.href="/html/faculty/faculty-info/faculty.html"
             }
         );
         }
@@ -1063,7 +1063,7 @@ function submitfacworkshop(){
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
-                window.location.href="/Info_IT/html/faculty/faculty-info/faculty.html"
+                window.location.href="/html/faculty/faculty-info/faculty.html"
             }
         );
         }
@@ -1143,7 +1143,7 @@ function submitjournal(){
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
-                window.location.href="/Info_IT/html/faculty/faculty-info/faculty.html"
+                window.location.href="/html/faculty/faculty-info/faculty.html"
             }
         );
         }
@@ -1226,7 +1226,7 @@ function submitfacproject(){
                 
                 })
                 alert("File uploaded successfully and URL saved to database!");
-                window.location.href="/Info_IT/html/faculty/faculty-info/faculty.html "
+                window.location.href="/html/faculty/faculty-info/faculty.html "
             }
         );
         }
@@ -1307,7 +1307,7 @@ function submitfacother(){
                   id:randomId
                 })
                 alert("File uploaded successfully and URL saved to database!");
-                window.location.href="/Info_IT/html/faculty/faculty-info/faculty.html"
+                window.location.href="/html/faculty/faculty-info/faculty.html"
             }
         );
         }
@@ -1361,7 +1361,7 @@ function copyid(formid){
     console.log("in fucntion" +formid)
 
     localStorage.setItem("id", formid) 
-window.location.href = "../html/edit.html"   
+window.location.href = "/html/edit.html"   
 }
 
 
@@ -1719,7 +1719,7 @@ function createUserCard(userId, userData, section) {
     card.addEventListener('click', () => {
         // Copy the user's UID to localStorage
         localStorage.setItem('selectedUserId', userId);
-        window.location.href="../html/admin/admin-info/events-stu-rec.html";
+        window.location.href="/html/admin/admin-info/events-stu-rec.html";
     });
 
     section.appendChild(card);
