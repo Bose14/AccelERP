@@ -395,7 +395,7 @@ function submitintern(){
                 
                 })
                 alert("Successfully Saved!");
-                window.location.href="/html/student/student-info/student.html"
+                window.location.href="/student-info/student.html"
             
             }
         );
